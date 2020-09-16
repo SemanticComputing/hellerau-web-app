@@ -31,8 +31,8 @@ import ClientFSMain from '../components/perspectives/sampo/client_fs/ClientFSMai
 import InstanceHomePage from '../components/perspectives/sampo/InstanceHomePage'
 import Footer from '../components/perspectives/sampo/Footer'
 import KnowledgeGraphMetadataTable from '../components/perspectives/sampo/KnowledgeGraphMetadataTable'
-import { perspectiveConfig } from '../configs/sampo/PerspectiveConfig'
-import { perspectiveConfigOnlyInfoPages } from '../configs/sampo/PerspectiveConfigOnlyInfoPages'
+import { perspectiveConfig } from '../configs/hellerau/PerspectiveConfig'
+import { perspectiveConfigOnlyInfoPages } from '../configs/hellerau/PerspectiveConfigOnlyInfoPages'
 import { rootUrl } from '../configs/sampo/GeneralConfig'
 // ** Portal specific components and configs end **
 
