@@ -208,44 +208,7 @@ const TopBar = props => {
           <Button component={AdapterLink} to='/'>
             <Typography className={classes.homeButtonText} variant='h6'>{intl.get('appTitle.short')}</Typography>
           </Button>
-          {!clientFSMode &&
-            <TopBarSearchField
-              fetchFullTextResults={props.fetchFullTextResults}
-              clearResults={props.clearResults}
-              xsScreen={props.xsScreen}
-              rootUrl={rootUrl}
-            />}
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            {perspectives.map((perspective, index) => perspective.isHidden ? null : renderDesktopTopMenuItem(perspective, index))}
-            <div className={classes.appBarDivider} />
-            <Button
-              className={classes.appBarButton}
-              component={AdapterNavLink}
-              to={`${props.rootUrl}/feedback`}
-              isActive={(match, location) => location.pathname.startsWith(`${props.rootUrl}/feedback`)}
-              activeClassName={classes.appBarButtonActive}
-            >
-              {intl.get('topBar.feedback')}
-            </Button>
-            <TopBarInfoButton rootUrl={props.rootUrl} />
-            <Button
-              className={classes.appBarButton}
-              component={AdapterNavLink}
-              to={`${props.rootUrl}/instructions`}
-              isActive={(match, location) => location.pathname.startsWith(`${props.rootUrl}/instructions`)}
-              activeClassName={classes.appBarButtonActive}
-            >
-              {intl.get('topBar.instructions')}
-            </Button>
-            {showLanguageButton &&
-              <TopBarLanguageButton
-                currentLocale={currentLocale}
-                availableLocales={availableLocales}
-                loadLocales={props.loadLocales}
-                location={props.location}
-              />}
-          </div>
           <a
             className={classes.secoLogo}
             href='https://seco.cs.aalto.fi'

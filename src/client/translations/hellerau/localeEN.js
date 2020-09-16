@@ -4,7 +4,7 @@ export default {
     short: 'hellerau',
     long: ' &nbsp; &nbsp; Hellerau  &nbsp;  &nbsp;',
     subheading: `
-      "Here to forge for us the Sampo, Hammer us the lid in colors"
+      
     `
   },
   appDescription: `

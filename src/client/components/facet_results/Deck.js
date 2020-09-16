@@ -52,7 +52,7 @@ class Deck extends React.Component {
     viewport: {
       longitude: 10.37,
       latitude: 22.43,
-      zoom: 2,
+      zoom: 1,
       pitch: 0,
       bearing: 0,
       width: 100,
