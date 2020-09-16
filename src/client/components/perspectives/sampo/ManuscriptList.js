@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
+import { sortBy } from 'lodash'
 
 const styles = theme => ({
   root: {
@@ -15,10 +16,11 @@ const ManuscriptList = props => {
   let items = ''
   const isArray = Array.isArray(manuscripts)
   if (isArray) {
-    items = manuscripts.map(m =>
+    const sorted = sortBy(manuscripts, ['prefLabel'])
+    items = sorted.map(m =>
       <li key={m.id}>
         <Typography>
-          <Link to={m.dataProviderUrl}>{m.prefLabel}</Link>
+          {m.prefLabel}
         </Typography>
       </li>)
   }
@@ -26,16 +28,16 @@ const ManuscriptList = props => {
     <div className={classes.root}>
       {isArray &&
         <>
-          <Typography>Manuscripts:</Typography>
+          <Typography>People:</Typography>
           <ul>
             {items}
           </ul>
         </>}
       {!isArray &&
         <>
-          <Typography>Manuscript:</Typography>
+          <Typography>People:</Typography>
           <Typography>
-            <Link to={manuscripts.dataProviderUrl}>{manuscripts.prefLabel}</Link>
+            {manuscripts.prefLabel}
           </Typography>
         </>}
     </div>

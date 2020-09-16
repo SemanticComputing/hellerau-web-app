@@ -20,7 +20,7 @@ const Hellerau = props => {
       />
       <Route
         exact path={`${rootUrl}/${perspective.id}/faceted-search`}
-        render={() => <Redirect to={`${rootUrl}/${perspective.id}/faceted-search/table`} />}
+        render={() => <Redirect to={`${rootUrl}/${perspective.id}/faceted-search/migrations`} />}
       />
       <Route
         path={[`${props.rootUrl}/${perspective.id}/faceted-search/table`, '/iframe.html']}

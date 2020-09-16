@@ -20,23 +20,23 @@ export const perspectiveConfig = [
     id: 'hellerau',
     frontPageImage: manuscriptsImage,
     perspectiveDescHeight: 160,
-    defaultActiveFacets: new Set(['prefLabel']),
+    defaultActiveFacets: new Set(['']),
     tabs: [
       {
-        id: 'table',
-        value: 0,
-        icon: <CalendarViewDayIcon />
-      },
-      {
         id: 'migrations',
-        value: 1,
+        value: 0,
         icon: <RedoIcon />
       },
       {
-        id: 'export',
-        value: 2,
-        icon: <CloudDownloadIcon />
-      }
+        id: 'table',
+        value: 1,
+        icon: <CalendarViewDayIcon />
+      },
+      // {
+      //   id: 'export',
+      //   value: 2,
+      //   icon: <CloudDownloadIcon />
+      // }
     ],
     instancePageTabs: [
       {
