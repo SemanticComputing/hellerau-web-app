@@ -1,5 +1,5 @@
 {
-  "name": "sampo-ui",
+  "name": "hellerau-web-app",
   "scripts": {
     "dev": "concurrently --prefix none \"npm run server\" \"npm run client\"",
     "build": "npm run build-client && npm run build-server",
