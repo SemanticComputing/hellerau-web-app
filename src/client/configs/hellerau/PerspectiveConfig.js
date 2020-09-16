@@ -31,7 +31,7 @@ export const perspectiveConfig = [
         id: 'table',
         value: 1,
         icon: <CalendarViewDayIcon />
-      },
+      }
       // {
       //   id: 'export',
       //   value: 2,
