@@ -23,11 +23,13 @@ export const hellerauMigrationsQuery = `
     ?to__id ?to__prefLabel ?to__lat ?to__long
   WHERE {
     <FILTER>
-    # Koulun nimi ennen muuttoa 1925: Schule Hellerau für Rhythmus, Musik und Körperbildung.
-    # Sijainti: Hellerau-Dresden: https://www.geonames.org/2906837/hellerau.html
-    BIND(<https://sws.geonames.org/2906837/> as ?from__id)
-    ?person__id h-schema:home_1930|h-schema:home_1937 ?to__id ;
-                    skos:prefLabel ?person__prefLabel .
+    ## Koulun nimi muuton (1925 jälkeen): Die Schule Hellerau-Laxenburg.
+    # Sijainti:  https://www.geonames.org/2772809/schloss-laxenburg.html
+    BIND(<https://sws.geonames.org/2772809/> as ?from__id)
+    ?person__id skos:prefLabel ?person__prefLabel .
+    OPTIONAL { ?person__id h-schema:home_1930 ?home1930 }
+    OPTIONAL { ?person__id h-schema:home_1937 ?home1937 }
+    BIND(COALESCE(?home1930, ?home1937, "-") as ?to__id) 
     BIND(CONCAT("/${perspectiveID}/page/", REPLACE(STR(?person__id), "^.*\\\\/(.+)", "$1")) AS ?person__dataProviderUrl)
     ?from__id gn:name ?from__prefLabel ;
               wgs84:lat ?from__lat ;
