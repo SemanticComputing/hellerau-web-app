@@ -18,10 +18,10 @@ const MigrationsMapTooltip = props => {
 
   return (
     <Paper style={rootStyle}>
-      <Typography>Production place: &nbsp;
+      <Typography>Start: &nbsp;
         {Array.isArray(from.prefLabel) ? from.prefLabel[0] : from.prefLabel}
       </Typography>
-      <Typography>Last known location: &nbsp;
+      <Typography>Destination: &nbsp;
         {Array.isArray(to.prefLabel) ? to.prefLabel[0] : to.prefLabel}
       </Typography>
       <br />
