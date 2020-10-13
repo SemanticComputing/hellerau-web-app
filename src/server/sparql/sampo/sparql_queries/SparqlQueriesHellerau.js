@@ -36,6 +36,7 @@ export const hellerauMigrationsQuery = `
               wgs84:long ?to__long .
       BIND(IRI(CONCAT(STR(?from__id), "-", REPLACE(STR(?to__id), "https://sws.geonames.org", "--"))) as ?id)
       FILTER NOT EXISTS { ?person__id h-schema:home_1937 [] . }
+      FILTER (?to__id != <https://sws.geonames.org/2772809/>)
     }
     UNION 
     {
@@ -52,6 +53,7 @@ export const hellerauMigrationsQuery = `
               wgs84:long ?to__long .
       BIND(IRI(CONCAT(STR(?from__id), "-", REPLACE(STR(?to__id), "https://sws.geonames.org", "--"))) as ?id)
       FILTER NOT EXISTS { ?person__id h-schema:home_1930 [] . }
+      FILTER (?to__id != <https://sws.geonames.org/2772809/>)
     }
     UNION 
     {
@@ -69,6 +71,7 @@ export const hellerauMigrationsQuery = `
               wgs84:long ?to__long .
       BIND(IRI(CONCAT(STR(?from__id), "-", REPLACE(STR(?to__id), "https://sws.geonames.org", "--"))) as ?id)
       FILTER (?to__id = ?home_1937)
+      FILTER (?to__id != <https://sws.geonames.org/2772809/>)
     }
     UNION
     {
@@ -86,6 +89,7 @@ export const hellerauMigrationsQuery = `
               wgs84:long ?to__long .
       BIND(IRI(CONCAT(STR(?from__id), "-", REPLACE(STR(?to__id), "https://sws.geonames.org", "--"))) as ?id)
       FILTER (?to__id != ?home_1937)
+      FILTER (?to__id != <https://sws.geonames.org/2772809/>)
     }
     UNION
     {
@@ -102,6 +106,7 @@ export const hellerauMigrationsQuery = `
               wgs84:long ?to__long .
       BIND(IRI(CONCAT(STR(?from__id), "-", REPLACE(STR(?to__id), "https://sws.geonames.org", "--"))) as ?id)
       FILTER (?from__id != ?to__id)
+      FILTER (?to__id != <https://sws.geonames.org/2772809/>)
     }
   }
 `
