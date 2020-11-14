@@ -24,7 +24,7 @@ import FacetBar from '../components/facet_bar/FacetBar'
 
 // ** Portal specific components and configs **
 import TopBar from '../components/perspectives/sampo/TopBar'
-import FacetedSearchPerspective from '../components/perspectives/sampo/FacetedSearchPerspective'
+import FacetedSearchPerspective from '../components/perspectives/hellerau/FacetedSearchPerspective'
 import FullTextSearch from '../components/perspectives/sampo/FullTextSearch'
 import ClientFSPerspective from '../components/perspectives/sampo/client_fs/ClientFSPerspective'
 import ClientFSMain from '../components/perspectives/sampo/client_fs/ClientFSMain'
@@ -607,28 +607,10 @@ const SemanticPortal = props => {
 const mapStateToProps = state => {
   const { clientFSResults, clientFSFacetValues } = filterResults(state.clientSideFacetedSearch)
   return {
-    perspective1: state.perspective1,
-    perspective1Facets: state.perspective1Facets,
-    perspective1FacetsConstrainSelf: state.perspective1FacetsConstrainSelf,
-    perspective2: state.perspective2,
-    perspective2Facets: state.perspective2Facets,
-    perspective2FacetsConstrainSelf: state.perspective2FacetsConstrainSelf,
-    perspective3: state.perspective3,
-    perspective3Facets: state.perspective3Facets,
-    perspective3FacetsConstrainSelf: state.perspective3FacetsConstrainSelf,
-    manuscripts: state.manuscripts,
-    works: state.works,
-    events: state.events,
-    actors: state.actors,
-    expressions: state.expressions,
-    collections: state.collections,
+    hellerau: state.hellerau,
+    hellerauFacets: state.hellerauFacets,
+    hellerauFacetsConstrainSelf: state.hellerauFacetsConstrainSelf,
     places: state.places,
-    finds: state.finds,
-    findsFacets: state.findsFacets,
-    findsFacetsConstrainSelf: state.findsFacetsConstrainSelf,
-    emloActors: state.emloActors,
-    emloActorsFacets: state.emloActorsFacets,
-    emloActorsFacetsConstrainSelf: state.emloActorsFacetsConstrainSelf,
     leafletMap: state.leafletMap,
     fullTextSearch: state.fullTextSearch,
     clientFS: state.clientSideFacetedSearch,
@@ -681,38 +663,6 @@ SemanticPortal.propTypes = {
    * Errors shown with react-redux-toastr.
    */
   error: PropTypes.object.isRequired,
-  /**
-   * Faceted search configs and results of 'Perspective 1'.
-   */
-  perspective1: PropTypes.object.isRequired,
-  /**
-   * Facet configs and values of 'Perspective 1'.
-   */
-  perspective1Facets: PropTypes.object.isRequired,
-  /**
-   * Facet configs and values for facets that restrict themselves of 'Perspective 1'.
-   */
-  perspective1FacetsConstrainSelf: PropTypes.object.isRequired,
-  /**
-   * Faceted search configs and results of 'Perspective 2'.
-   */
-  perspective2: PropTypes.object.isRequired,
-  /**
-   * Facet configs and values of 'Perspective 2'.
-   */
-  perspective2Facets: PropTypes.object.isRequired,
-  /**
-   * Faceted search configs and results of 'Perspective 3'.
-   */
-  perspective3: PropTypes.object.isRequired,
-  /**
-   * Facet configs and values of 'Perspective 3'.
-   */
-  perspective3Facets: PropTypes.object.isRequired,
-  /**
-   * Faceted search configs and results of 'Places'.
-   */
-  places: PropTypes.object.isRequired,
   /**
    * Leaflet map config and external layers.
    */

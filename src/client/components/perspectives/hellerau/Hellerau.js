@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import intl from 'react-intl-universal'
 import { Route, Redirect } from 'react-router-dom'
 import PerspectiveTabs from '../../main_layout/PerspectiveTabs'
 import ResultTable from '../../facet_results/ResultTable'
@@ -48,6 +49,14 @@ const Hellerau = props => {
             fetchResults={props.fetchResults}
             fetching={props.placesResults.fetching}
             layerType='arcLayer'
+            fromText={intl.get('deckGlMap.manuscriptMigrations.from')}
+            toText={intl.get('deckGlMap.manuscriptMigrations.to')}
+            legendTitle={intl.get('deckGlMap.manuscriptMigrations.legendTitle')}
+            legendFromText={intl.get('deckGlMap.manuscriptMigrations.legendFrom')}
+            legendToText={intl.get('deckGlMap.manuscriptMigrations.legendTo')}
+            showMoreText={intl.get('deckGlMap.showMoreInformation')}
+            listHeadingSingleInstance={intl.get('deckGlMap.manuscriptMigrations.listHeadingSingleInstance')}
+            listHeadingMultipleInstances={intl.get('deckGlMap.manuscriptMigrations.listHeadingMultipleInstances')}
             showTooltips
             mapBoxAccessToken={MAPBOX_ACCESS_TOKEN}
             mapBoxStyle={MAPBOX_STYLE}
