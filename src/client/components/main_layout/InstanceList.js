@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import Typography from '@material-ui/core/Typography'
 
 const styles = theme => ({
@@ -18,7 +18,7 @@ const InstanceList = props => {
     items = data.map(d =>
       <li key={d.id}>
         <Typography>
-          <Link to={d.dataProviderUrl}>{d.prefLabel}</Link>
+          {d.prefLabel}
         </Typography>
       </li>)
   }
@@ -35,7 +35,7 @@ const InstanceList = props => {
         <>
           <Typography>{listHeadingSingleInstance}</Typography>
           <Typography>
-            <Link to={data.dataProviderUrl}>{data.prefLabel}</Link>
+            {data.prefLabel}
           </Typography>
         </>}
     </div>

@@ -49,14 +49,14 @@ const Hellerau = props => {
             fetchResults={props.fetchResults}
             fetching={props.placesResults.fetching}
             layerType='arcLayer'
-            fromText={intl.get('deckGlMap.manuscriptMigrations.from')}
-            toText={intl.get('deckGlMap.manuscriptMigrations.to')}
-            legendTitle={intl.get('deckGlMap.manuscriptMigrations.legendTitle')}
-            legendFromText={intl.get('deckGlMap.manuscriptMigrations.legendFrom')}
-            legendToText={intl.get('deckGlMap.manuscriptMigrations.legendTo')}
+            fromText={intl.get('deckGlMap.studentMigrations.from')}
+            toText={intl.get('deckGlMap.studentMigrations.to')}
+            legendTitle={intl.get('deckGlMap.studentMigrations.legendTitle')}
+            legendFromText={intl.get('deckGlMap.studentMigrations.legendFrom')}
+            legendToText={intl.get('deckGlMap.studentMigrations.legendTo')}
             showMoreText={intl.get('deckGlMap.showMoreInformation')}
-            listHeadingSingleInstance={intl.get('deckGlMap.manuscriptMigrations.listHeadingSingleInstance')}
-            listHeadingMultipleInstances={intl.get('deckGlMap.manuscriptMigrations.listHeadingMultipleInstances')}
+            listHeadingSingleInstance={intl.get('deckGlMap.studentMigrations.listHeadingSingleInstance')}
+            listHeadingMultipleInstances={intl.get('deckGlMap.studentMigrations.listHeadingMultipleInstances')}
             showTooltips
             mapBoxAccessToken={MAPBOX_ACCESS_TOKEN}
             mapBoxStyle={MAPBOX_STYLE}

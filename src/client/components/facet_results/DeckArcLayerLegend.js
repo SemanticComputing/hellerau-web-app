@@ -28,7 +28,6 @@ const DeckArcLayerLegend = props => {
         <Typography className={classes.blue} variant='body2' gutterBottom>
           {fromText}
         </Typography>
-        <br />
         <Typography className={classes.red} variant='body2' gutterBottom>
           {toText}
         </Typography>

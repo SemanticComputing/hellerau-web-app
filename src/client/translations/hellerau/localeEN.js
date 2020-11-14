@@ -130,6 +130,19 @@ export default {
     wrongZoomLevelFHA: 'The map zoom level has to be at least 13 in order to show this layer',
     tooManyResults: 'More than 3000 results, please use clustered map or heatmap'
   },
+  deckGlMap: {
+    arcColouring: 'Arc colouring:',
+    showMoreInformation: 'Click to show more information.',
+    studentMigrations: {
+      legendTitle: 'Arc colouring',
+      legendFrom: 'From',
+      legendTo: 'To',
+      from: 'From:',
+      to: 'To:',
+      listHeadingSingleInstance: 'Person:',
+      listHeadingMultipleInstances: 'People:'
+    }
+  },
   instancePageGeneral: {
     introduction: `
       <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">

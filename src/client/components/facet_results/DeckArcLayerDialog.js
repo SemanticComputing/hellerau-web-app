@@ -5,7 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import InstanceList from '../main_layout/InstanceList'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 const styles = () => ({
   dialogPaper: {
@@ -20,8 +20,7 @@ const DeckArcLayerDialog = props => {
     classes, open, onClose, data, fromText, toText,
     listHeadingSingleInstance, listHeadingMultipleInstances
   } = props
-  const hasData = data !== null && data.from && data.to && data.manuscript
-
+  const hasData = data !== null && data.from && data.to && data.person
   return (
     <Dialog
       classes={{ paper: classes.dialogPaper }}
@@ -33,17 +32,13 @@ const DeckArcLayerDialog = props => {
         {hasData &&
           <>
             <Typography>{fromText} &nbsp;
-              <Link to={data.from.dataProviderUrl}>
-                {Array.isArray(data.from.prefLabel) ? data.from.prefLabel[0] : data.from.prefLabel}
-              </Link>
+              {Array.isArray(data.from.prefLabel) ? data.from.prefLabel[0] : data.from.prefLabel}
             </Typography>
             <Typography>{toText} &nbsp;
-              <Link to={data.to.dataProviderUrl}>
-                {Array.isArray(data.to.prefLabel) ? data.to.prefLabel[0] : data.to.prefLabel}
-              </Link>
+              {Array.isArray(data.to.prefLabel) ? data.to.prefLabel[0] : data.to.prefLabel}
             </Typography>
             <InstanceList
-              data={data.manuscript}
+              data={data.person}
               listHeadingSingleInstance={listHeadingSingleInstance}
               listHeadingMultipleInstances={listHeadingMultipleInstances}
             />
