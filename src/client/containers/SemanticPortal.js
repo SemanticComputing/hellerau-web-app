@@ -46,6 +46,7 @@ import {
   fetchFacet,
   fetchFacetConstrainSelf,
   clearFacet,
+  clearAllFacets,
   fetchGeoJSONLayers,
   fetchGeoJSONLayersBackend,
   clearGeoJSONLayers,
@@ -364,8 +365,10 @@ const SemanticPortal = props => {
                                   fetchFacetConstrainSelf={props.fetchFacetConstrainSelf}
                                   fetchResults={props.fetchResults}
                                   clearFacet={props.clearFacet}
+                                  clearAllFacets={props.clearAllFacets}
                                   fetchResultCount={props.fetchResultCount}
                                   updateFacetOption={props.updateFacetOption}
+                                  showError={props.showError}
                                   defaultActiveFacets={perspective.defaultActiveFacets}
                                   rootUrl={rootUrlWithLang}
                                 />
@@ -626,9 +629,6 @@ const mapStateToProps = state => {
     emloActors: state.emloActors,
     emloActorsFacets: state.emloActorsFacets,
     emloActorsFacetsConstrainSelf: state.emloActorsFacetsConstrainSelf,
-    hellerau: state.hellerau,
-    hellerauFacets: state.hellerauFacets,
-    hellerauFacetsConstrainSelf: state.hellerauFacetsConstrainSelf,
     leafletMap: state.leafletMap,
     fullTextSearch: state.fullTextSearch,
     clientFS: state.clientSideFacetedSearch,
@@ -649,6 +649,7 @@ const mapDispatchToProps = ({
   fetchFacet,
   fetchFacetConstrainSelf,
   clearFacet,
+  clearAllFacets,
   fetchGeoJSONLayers,
   fetchGeoJSONLayersBackend,
   clearGeoJSONLayers,
