@@ -7,6 +7,7 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import FormControl from '@material-ui/core/FormControl'
+import FormHelperText from '@material-ui/core/FormHelperText'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 const styles = theme => ({
@@ -89,7 +90,7 @@ class TextFacet extends React.Component {
     return (
       <div className={classes.root}>
         <FormControl className={classes.textSearch}>
-          <InputLabel htmlFor='adornment-search'>Search</InputLabel>
+          <InputLabel htmlFor='adornment-search'>"last name first name"</InputLabel>
           <Input
             id='adornment-search'
             type='text'
@@ -103,6 +104,7 @@ class TextFacet extends React.Component {
               </InputAdornment>
             }
           />
+          <FormHelperText>Use quatation marks to get exact matches. For example: "berchem yvonne"</FormHelperText>
         </FormControl>
       </div>
     )

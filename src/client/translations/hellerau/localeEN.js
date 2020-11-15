@@ -2,13 +2,62 @@ export default {
   languageLabel: 'English',
   appTitle: {
     short: 'hellerau',
-    long: ' &nbsp; &nbsp; Hellerau  &nbsp;  &nbsp;',
+    long: 'Post Jaques-Dalcroze Hellerau',
     subheading: `
-      
+      Mapping a transnational practice
     `
   },
   appDescription: `
-    
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      Èmile Jaques-Dalcroze was a musician, composer and teacher who led a school <em>Bildungsanstalt für 
+      Musik und Rhythmus Émile Jaques-Dalcroze</em> in Hellerau, near Dresden in 1910–1914. After he left 
+      Germany his former students, Christine Baer-Frissell, Valeria Kratina and Ernst Ferand took over 
+      the school and under their leadership it developed into one of the leading institutes of rhythmics, 
+      movement and dance education in the interwar Europe. The school was named as <em>Schule Hellerau für 
+      Rhythmus, Musik und Körperbildung</em>. In July 1925 the institute moved to an old castle in Laxenburg, 
+      near Vienna and was thereafter known as <em>Schule Hellerau-Laxenburg. Ausbildungsstätte für Gymnastik, 
+      Rhythmische Erziehung und Tanz</em>.
+    </p>
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      The membership lists of the school’s union called <em>Der Bund Hellerau-Laxenburg</em> show how the practice 
+      travelled with its diploma holders and former students many of whom started careers as dancers, teachers of 
+      rhythmics or body training. The map is based on the union's membership lists from 1930 and 1937. Those 
+      were published in newsletters that are deposited in the  <a href="https://www.muk.ac.at/forschung/tanz-archiv.html" target='_blank' rel='noopener noreferrer'>
+      Tanz-Archiv, Musik und Kunst Privatuniversität der Stadt Wien, Sammlung Rosalia Chladek</a>.
+    </p>
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      The map does not provide an exhaustive overview of the locations of those who had been awarded a diploma, 
+      as the union only published the names and addresses of those members who had provided their contact 
+      information or paid their membership fees. Some graduates never joined the union and some had resigned. 
+      In 1930 the membership list included 94 names, and in 1937 the union listed 155 members. The map is 
+      based on data on 166 people. Each member is listed only once, and if the person had a new address in 
+      1937, both places of residence (1930 and 1937) are listed. 
+    </p>
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      In all cases the place of origin shown on the map is Hellerau-Laxenburg, even though some members had 
+      received their diplomas while the school was in Dresden. 
+    </p> 
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      <b>Acknowledgements</b>
+    </p>
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      Univ.–Prof. Dr. Andrea Amort. The data is published with a permission of Tanz-Archiv, 
+      Musik und Kunst Privatuniversität der Stadt Wien.
+    </p>
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      <b>Sources</b>
+    </p>
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      Bund Hellerau-Laxenburg. Mitteilungsblatt, Nr. 7, Oktober 1930. RC/SAM/LAX, Tanz-Archiv MUK Wien. 
+    </p>   
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      Der Bund. Blätter der Bund Hellerau-Laxenburg, Nr. 35, Oktober 1937. RC/SAM/LAX, Tanz-Archiv MUK Wien. 
+    </p> 
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      Laakkonen Johanna. 2018. Tanssia yli rajojen. Modernin tanssin transnationaaliset verkostot. Suomalaisen 
+      kirjallisuuden seuran toimituksia 1436. Helsinki: SKS.  
+    </p>         
+
   `,
   appDescription1: `
     Sampo is a web service for searching and studying place names. The search results
@@ -41,7 +90,9 @@ export default {
   },
   facetBar: {
     results: 'Results',
+    activeFilters: 'Active filters:',
     narrowDownBy: 'Narrow down by',
+    removeAllFilters: 'Remove all',
     filterOptions: 'Filter options',
     filterByName: 'Filter by name',
     filterByBoundingBox: 'Filter by bounding box',
@@ -169,20 +220,60 @@ export default {
   },
   perspectives: {
     hellerau: {
-      label: 'Hellerau',
+      clickToOpenTheMap: 'Click to open the map',
+      label: 'Post Jaques-Dalcroze Hellerau – Mapping a transnational practice',
       facetResultsType: 'people',
-      shortDescription: 'Description',
+      shortDescription: '',
       longDescription: `
         <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
-          Intro text can be added here.
+          Èmile Jaques-Dalcroze was a musician, composer and teacher who led a school <em>Bildungsanstalt für 
+          Musik und Rhythmus Émile Jaques-Dalcroze</em> in Hellerau, near Dresden in 1910–1914. After he left 
+          Germany his former students, Christine Baer-Frissell, Valeria Kratina and Ernst Ferand took over 
+          the school and under their leadership it developed into one of the leading institutes of rhythmics, 
+          movement and dance education in the interwar Europe. The school was named as <em>Schule Hellerau für 
+          Rhythmus, Musik und Körperbildung</em>. In July 1925 the institute moved to an old castle in Laxenburg, 
+          near Vienna and was thereafter known as <em>Schule Hellerau-Laxenburg. Ausbildungsstätte für Gymnastik, 
+          Rhythmische Erziehung und Tanz</em>.
         </p>
-        <ul class="MuiTypography-root MuiTypography-body1">
-          <li>
-            <strong>MIGRATIONS</STRONG> ...
-          <li>
-            <strong>TABLE</STRONG> ...
-          </li>
-        </ul>
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          The membership lists of the school’s union called <em>Der Bund Hellerau-Laxenburg</em> show how the practice 
+          travelled with its diploma holders and former students many of whom started careers as dancers, teachers of 
+          rhythmics or body training. The map is based on the union's membership lists from 1930 and 1937. Those 
+          were published in newsletters that are deposited in the  <a href="https://www.muk.ac.at/forschung/tanz-archiv.html" target='_blank' rel='noopener noreferrer'>
+          Tanz-Archiv, Musik und Kunst Privatuniversität der Stadt Wien, Sammlung Rosalia Chladek</a>.
+        </p>
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          The map does not provide an exhaustive overview of the locations of those who had been awarded a diploma, 
+          as the union only published the names and addresses of those members who had provided their contact 
+          information or paid their membership fees. Some graduates never joined the union and some had resigned. 
+          In 1930 the membership list included 94 names, and in 1937 the union listed 155 members. The map is 
+          based on data on 166 people. Each member is listed only once, and if the person had a new address in 
+          1937, both places of residence (1930 and 1937) are listed. 
+        </p>
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          In all cases the place of origin shown on the map is Hellerau-Laxenburg, even though some members had 
+          received their diplomas while the school was in Dresden. 
+        </p> 
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          <b>Acknowledgements</b>
+        </p>
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          Univ.–Prof. Dr. Andrea Amort. The data is published with a permission of Tanz-Archiv, 
+          Musik und Kunst Privatuniversität der Stadt Wien.
+        </p>
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          <b>Sources</b>
+        </p>
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          Bund Hellerau-Laxenburg. Mitteilungsblatt, Nr. 7, Oktober 1930. RC/SAM/LAX, Tanz-Archiv MUK Wien. 
+        </p>   
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          Der Bund. Blätter der Bund Hellerau-Laxenburg, Nr. 35, Oktober 1937. RC/SAM/LAX, Tanz-Archiv MUK Wien. 
+        </p> 
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          Laakkonen Johanna. 2018. Tanssia yli rajojen. Modernin tanssin transnationaaliset verkostot. Suomalaisen 
+          kirjallisuuden seuran toimituksia 1436. Helsinki: SKS.  
+        </p>         
       `,
       // instancePage: {
       //   label: 'Place',
@@ -205,19 +296,19 @@ export default {
         prefLabel: {
           label: 'Name',
           description: `
-            Preferable place label.
+            "Name of the student." 
           `
         },
         home1930: {
-          label: 'Hometown 1930',
+          label: 'Place of residence in 1930',
           description: `
-            Hometown 1930 description.
+            Place of residence in 1930.
           `
         },
         home1937: {
-          label: 'Hometown 1937',
+          label: 'Place of residence in 1937',
           description: `
-            Hometown 1937 description.
+            Place of residence in 1930.
           `
         }
       }

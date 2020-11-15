@@ -63,7 +63,7 @@ export const INITIAL_STATE = {
 
 const hellerauFacets = (state = INITIAL_STATE, action) => {
   if (action.facetClass === 'hellerau') {
-    return handleFacetAction(state, action)
+    return handleFacetAction(state, action, INITIAL_STATE)
   } else return state
 }
 

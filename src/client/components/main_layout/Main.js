@@ -4,7 +4,8 @@ import intl from 'react-intl-universal'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import MainCard from './MainCard'
+// import MainCard from './MainCard'
+import HellerauCard from '../perspectives/hellerau/HellerauCard'
 import bannerImage from '../../img/main_page/mmm-banner.jpg'
 
 const useStyles = makeStyles(theme => ({
@@ -54,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   heroContent: {
-    // paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1)
   },
   licenceText: {
@@ -68,6 +69,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
     display: 'flex',
     justifyContent: 'center'
+  },
+  cards: {
+    marginBottom: theme.spacing(1)
   }
 }))
 
@@ -130,33 +134,35 @@ const Main = props => {
       </div>
       <div className={classes.layout}>
         <div className={classes.heroContent}>
+          <Grid
+            container spacing={screenSize === 'sm' ? 2 : 1}
+            justify='center'
+            className={classes.cards}
+          >
+            {perspectives.map(perspective => {
+              if (!perspective.isHidden) {
+                return (
+                  <HellerauCard
+                    key={perspective.id}
+                    perspective={perspective}
+                    cardHeadingVariant='h5'
+                    rootUrl={props.rootUrl}
+                  />
+                )
+              }
+            })}
+          </Grid>
           <Typography variant={descriptionVariant} color='textPrimary' paragraph>
             {intl.getHTML('appDescription')}
           </Typography>
-          <Typography variant={descriptionVariant} align='center' color='textPrimary' paragraph>
+          {/* <Typography variant={descriptionVariant} align='center' color='textPrimary' paragraph>
             {intl.get('selectPerspective')}
-          </Typography>
+          </Typography> */}
         </div>
-        <Grid
-          container spacing={screenSize === 'sm' ? 2 : 1}
-          justify={'center'}
-        >
-          {perspectives.map(perspective => {
-            if (!perspective.isHidden) {
-              return (
-                <MainCard
-                  key={perspective.id}
-                  perspective={perspective}
-                  cardHeadingVariant='h5'
-                  rootUrl={props.rootUrl}
-                />
-              )
-            }
-          })}
-        </Grid>
-        <div className={classes.licenceTextContainer}>
+
+        {/* <div className={classes.licenceTextContainer}>
           <Typography className={classes.licenceText}>{intl.getHTML('mainPageImageLicence')}</Typography>
-        </div>
+        </div> */}
       </div>
     </div>
   )
