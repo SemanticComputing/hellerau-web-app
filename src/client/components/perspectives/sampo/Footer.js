@@ -3,12 +3,13 @@ import Paper from '@material-ui/core/Paper'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/core/styles'
-import aaltoLogo from '../../../img/logos/Aalto_SCI_EN_13_BLACK_2_cropped.png'
-import hyLogo from '../../../img/logos/university-of-helsinki-logo-transparent-black.png'
-import heldigLogo from '../../../img/logos/heldig-logo-transparent-black.png'
+import aaltoLogo from '../../../img/logos/aalto-logo-white-no-background-small.png'
+import uhLogo from '../../../img/logos/university-of-helsinki-logo-white-no-background-small.png'
+import heldigLogo from '../../../img/logos/heldig-logo-small.png'
 
 const styles = theme => ({
   root: {
+    backgroundColor: theme.palette.primary.main,
     position: 'absolute',
     [theme.breakpoints.down('sm')]: {
       display: 'none'
@@ -67,7 +68,7 @@ const Footer = props => {
           </Grid>
           <Grid item xs className={classes.logoContainer}>
             <a href='https://www.helsinki.fi/en' target='_blank' rel='noopener noreferrer'>
-              <img className={classes.hyLogo} src={hyLogo} alt='logo' />
+              <img className={classes.hyLogo} src={uhLogo} alt='logo' />
             </a>
           </Grid>
           <Grid item xs className={classes.logoContainer}>
