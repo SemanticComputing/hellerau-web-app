@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 // import MainCard from './MainCard'
 import HellerauCard from '../perspectives/hellerau/HellerauCard'
-import bannerImage from '../../img/main_page/mmm-banner.jpg'
+import bannerImage from '../../img/main_page/hellerau-banner.jpg'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -160,9 +160,9 @@ const Main = props => {
           </Typography> */}
         </div>
 
-        {/* <div className={classes.licenceTextContainer}>
+        <div className={classes.licenceTextContainer}>
           <Typography className={classes.licenceText}>{intl.getHTML('mainPageImageLicence')}</Typography>
-        </div> */}
+        </div>
       </div>
     </div>
   )
