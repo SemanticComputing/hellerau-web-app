@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import intl from 'react-intl-universal'
 import { withStyles } from '@material-ui/core/styles'
 import IconButton from '@material-ui/core/IconButton'
 import SearchIcon from '@material-ui/icons/Search'
@@ -64,13 +65,14 @@ class TextFacet extends React.Component {
   }
 
   render () {
-    const { classes } = this.props
+    const { classes, facetClass, facetID } = this.props
+    const placeholder = intl.get(`perspectives.${facetClass}.properties.${facetID}.textFacetInputPlaceholder`)
     let searchButton = null
     const textResultsFetching = false
     if (textResultsFetching) {
       searchButton = (
         <IconButton
-          aria-label='Search places'
+          aria-label={placeholder}
         >
           <CircularProgress size={24} />
         </IconButton>
@@ -78,7 +80,7 @@ class TextFacet extends React.Component {
     } else {
       searchButton = (
         <IconButton
-          aria-label='Search'
+          aria-label={placeholder}
           onClick={this.handleClick}
           onMouseDown={this.handleMouseDown}
         >
@@ -90,7 +92,7 @@ class TextFacet extends React.Component {
     return (
       <div className={classes.root}>
         <FormControl className={classes.textSearch}>
-          <InputLabel htmlFor='adornment-search'>"last name first name"</InputLabel>
+          <InputLabel htmlFor='adornment-search'>{placeholder}</InputLabel>
           <Input
             id='adornment-search'
             type='text'
