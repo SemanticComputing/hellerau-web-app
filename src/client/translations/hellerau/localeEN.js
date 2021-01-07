@@ -297,7 +297,8 @@ export default {
           label: 'Name',
           description: `
             "Name of the student." 
-          `
+          `,
+          textFacetInputPlaceholder: '"last name first name"'
         },
         home1930: {
           label: 'Place of residence in 1930',
