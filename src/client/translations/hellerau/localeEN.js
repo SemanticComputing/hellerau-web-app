@@ -1,7 +1,7 @@
 export default {
   languageLabel: 'English',
   appTitle: {
-    short: 'hellerau',
+    short: 'Hellerau',
     long: 'Post Jaques-Dalcroze Hellerau',
     subheading: `
       Mapping a transnational practice

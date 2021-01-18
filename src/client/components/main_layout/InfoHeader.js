@@ -8,8 +8,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 // import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton'
-import InfoIcon from '@material-ui/icons/InfoOutlined'
+// import IconButton from '@material-ui/core/IconButton'
+// import InfoIcon from '@material-ui/icons/InfoOutlined'
 import intl from 'react-intl-universal'
 
 const styles = theme => ({
@@ -96,13 +96,15 @@ const InfoHeader = props => {
           IconButtonProps={{ onClick: handleExpandButtonOnClick }}
         >
           <div className={props.classes.headingContainer}>
-            <Typography component='h1' variant='h4'>
-              {props.pageType === 'facetResults' && intl.get(`perspectives.${props.resultClass}.label`)}
-              {props.pageType === 'instancePage' && intl.get(`perspectives.${props.resultClass}.instancePage.label`)}
+            <Typography variant='body1'>
+              <b>
+                {props.pageType === 'facetResults' && intl.get(`perspectives.${props.resultClass}.label`)}
+                {props.pageType === 'instancePage' && intl.get(`perspectives.${props.resultClass}.instancePage.label`)}
+              </b>
             </Typography>
-            <IconButton className={props.classes.infoIconButton} onClick={handleExpandButtonOnClick}>
+            {/* <IconButton className={props.classes.infoIconButton} onClick={handleExpandButtonOnClick}>
               <InfoIcon className={props.classes.infoIcon} />
-            </IconButton>
+            </IconButton> */}
           </div>
           {props.pageType === 'instancePage' &&
             <Typography className={props.classes.label} component='h1' variant='h6'>{generateLabel()}</Typography>}
