@@ -42,15 +42,21 @@ const Hellerau = props => {
         path={`${rootUrl}/${perspective.id}/faceted-search/migrations`}
         render={() =>
           <Deck
-            results={props.facetResults.results}
+            results={props.placesResults.results}
             facetUpdateID={props.facetData.facetUpdateID}
+            instanceAnalysisData={props.placesResults.instanceAnalysisData}
+            instanceAnalysisDataUpdateID={props.placesResults.instanceAnalysisDataUpdateID}
             resultClass='hellerauMigrations'
             facetClass='hellerau'
             fetchResults={props.fetchResults}
+            fetchInstanceAnalysis={props.fetchInstanceAnalysis}
             fetching={props.placesResults.fetching}
+            fetchingInstanceAnalysisData={props.placesResults.fetchingInstanceAnalysisData}
             layerType='arcLayer'
+            getArcWidth={d => d.instanceCountScaled}
             fromText={intl.get('deckGlMap.studentMigrations.from')}
             toText={intl.get('deckGlMap.studentMigrations.to')}
+            countText={intl.get('deckGlMap.studentMigrations.count')}
             legendTitle={intl.get('deckGlMap.studentMigrations.legendTitle')}
             legendFromText={intl.get('deckGlMap.studentMigrations.legendFrom')}
             legendToText={intl.get('deckGlMap.studentMigrations.legendTo')}

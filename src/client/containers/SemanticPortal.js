@@ -23,7 +23,7 @@ import FacetBar from '../components/facet_bar/FacetBar'
 // ** General components end **
 
 // ** Portal specific components and configs **
-import TopBar from '../components/perspectives/sampo/TopBar'
+import TopBar from '../components/perspectives/hellerau/TopBar'
 import FacetedSearchPerspective from '../components/perspectives/hellerau/FacetedSearchPerspective'
 import FullTextSearch from '../components/perspectives/sampo/FullTextSearch'
 import ClientFSPerspective from '../components/perspectives/sampo/client_fs/ClientFSPerspective'

@@ -51,7 +51,7 @@ import {
   emloPlacePropertiesInfoWindow,
   emloPeopleRelatedTo
 } from './sparql_queries/SparqlQueriesEmloPlaces'
-import { hellerauMigrationsQuery } from './sparql_queries/SparqlQueriesHellerau'
+import { hellerauMigrationsQuery, hellerauMigrationsDialogQuery } from './sparql_queries/SparqlQueriesHellerau'
 import { federatedSearchDatasets } from './sparql_queries/SparqlQueriesFederatedSearch'
 import { fullTextSearchProperties } from './sparql_queries/SparqlQueriesFullText'
 import { makeObjectList } from '../SparqlObjectMapper'
@@ -152,9 +152,29 @@ export const backendSearchConfig = {
       }
     }
   },
+  hellerauMigrations: {
+    perspectiveID: 'hellerau',
+    q: hellerauMigrationsQuery,
+    filterTarget: 'person',
+    resultMapper: makeObjectList,
+    postprocess: {
+      func: linearScale,
+      config: {
+        variable: 'instanceCount',
+        minAllowed: 3,
+        maxAllowed: 30
+      }
+    }
+  },
   placesMsMigrationsDialog: {
     perspectiveID: 'perspective1',
     q: migrationsDialogQuery,
+    filterTarget: 'id',
+    resultMapper: makeObjectList
+  },
+  hellerauMigrationsDialog: {
+    perspectiveID: 'hellerau',
+    q: hellerauMigrationsDialogQuery,
     filterTarget: 'id',
     resultMapper: makeObjectList
   },
@@ -239,12 +259,6 @@ export const backendSearchConfig = {
     q: emloSentReceivedQuery,
     // filterTarget: 'id',
     resultMapper: mapMultipleLineChart
-  },
-  hellerauMigrations: {
-    perspectiveID: 'hellerau',
-    q: hellerauMigrationsQuery,
-    filterTarget: 'person__id',
-    resultMapper: makeObjectList
   },
   perspective1KnowledgeGraphMetadata: {
     perspectiveID: 'perspective1',

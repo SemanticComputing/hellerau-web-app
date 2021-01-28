@@ -190,6 +190,7 @@ export default {
       legendTo: 'To',
       from: 'From:',
       to: 'To:',
+      count: 'Number of people:',
       listHeadingSingleInstance: 'Person:',
       listHeadingMultipleInstances: 'People:'
     }

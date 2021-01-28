@@ -19,6 +19,7 @@ const FacetedSearchPerspective = props => {
             facetDataConstrainSelf={props.facetDataConstrainSelf}
             fetchPaginatedResults={props.fetchPaginatedResults}
             fetchResults={props.fetchResults}
+            fetchInstanceAnalysis={props.fetchInstanceAnalysis}
             fetchFacetConstrainSelf={props.fetchFacetConstrainSelf}
             fetchGeoJSONLayers={props.fetchGeoJSONLayers}
             fetchGeoJSONLayersBackend={props.fetchGeoJSONLayersBackend}

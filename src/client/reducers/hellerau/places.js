@@ -13,6 +13,7 @@ export const INITIAL_STATE = {
   sortDirection: null,
   fetching: false,
   fetchingResultCount: false,
+  fetchingInstanceAnalysisData: false,
   facetedSearchHeaderExpanded: false,
   instancePageHeaderExpanded: false,
   instanceTableData: null,
@@ -43,7 +44,7 @@ export const INITIAL_STATE = {
 }
 
 const resultClasses = new Set([
-  'places'
+  'hellerauMigrations', 'hellerauMigrationsDialog'
 ])
 
 const places = (state = INITIAL_STATE, action) => {
