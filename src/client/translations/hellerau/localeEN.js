@@ -1,6 +1,7 @@
 export default {
   languageLabel: 'English',
   appTitle: {
+    html: 'Post Jaques-Dalcroze Hellerau – Mapping a transnational practice',
     short: 'Hellerau',
     long: 'Post Jaques-Dalcroze Hellerau',
     subheading: `
@@ -56,8 +57,20 @@ export default {
     <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
       Laakkonen Johanna. 2018. Tanssia yli rajojen. Modernin tanssin transnationaaliset verkostot. Suomalaisen 
       kirjallisuuden seuran toimituksia 1436. Helsinki: SKS.  
-    </p>         
-
+    </p>     
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      <b>Contact</b>
+    </p>    
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      For more information contact <a href="mailto:johanna.laakkonen@helsinki.fi">johanna.laakkonen@helsinki.fi</a>
+    </p>  
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      <b>Technical implementation</b>
+    </p>
+    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+      This portal has been created with <a href="https://seco.cs.aalto.fi/tools/sampo-ui/" target='_blank' rel='noopener noreferrer'>
+      Sampo-UI – A framework for building semantic portal user interfaces</a>
+    </p>  
   `,
   appDescription1: `
     Sampo is a web service for searching and studying place names. The search results
@@ -91,8 +104,8 @@ export default {
   facetBar: {
     results: 'Results',
     activeFilters: 'Active filters:',
-    narrowDownBy: 'Narrow down by',
     removeAllFilters: 'Remove all',
+    narrowDownBy: 'Narrow down by',
     filterOptions: 'Filter options',
     filterByName: 'Filter by name',
     filterByBoundingBox: 'Filter by bounding box',
@@ -103,7 +116,34 @@ export default {
     sortAlphabetically: 'Sort alphabetically',
     sortByNumberOfSearchResults: 'Sort by number of search results',
     useDisjunction: 'Use logical OR between selections',
-    useConjuction: 'Use logical AND between selections'
+    useConjuction: 'Use logical AND between selections',
+    minYear: 'Min year',
+    maxYear: 'Max year',
+    min: 'Min',
+    max: 'Max',
+    facetSearchFieldPlaceholder: 'Search...',
+    applyFacetSelection: 'apply',
+    pieChart: {
+      tooltip: 'Pie chart'
+    },
+    barChart: {
+      tooltip: 'Bar chart',
+      language: {
+        title: 'Language',
+        xaxisTitle: 'Language',
+        yaxisTitle: 'Manuscript count',
+        seriesTitle: 'Manuscript count'
+      }
+    },
+    lineChart: {
+      tooltip: 'Line chart',
+      productionTimespan: {
+        title: 'Manuscript production by decade',
+        xaxisTitle: 'Decade',
+        yaxisTitle: 'Manuscript count',
+        seriesTitle: 'Manuscript count'
+      }
+    }
   },
   tabs: {
     table: 'table',
@@ -275,6 +315,19 @@ export default {
           Laakkonen Johanna. 2018. Tanssia yli rajojen. Modernin tanssin transnationaaliset verkostot. Suomalaisen 
           kirjallisuuden seuran toimituksia 1436. Helsinki: SKS.  
         </p>         
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          <b>Contact</b>
+        </p>   
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          For more information contact <a href="mailto:johanna.laakkonen@helsinki.fi">johanna.laakkonen@helsinki.fi</a>
+        </p>  
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          <b>Technical implementation</b>
+        </p>
+        <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
+          This portal has been created with <a href="https://seco.cs.aalto.fi/tools/sampo-ui/" target='_blank' rel='noopener noreferrer'>
+          Sampo-UI – A framework for building semantic portal user interfaces</a>
+        </p>  
       `,
       // instancePage: {
       //   label: 'Place',
