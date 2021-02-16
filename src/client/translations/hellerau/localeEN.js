@@ -1,7 +1,10 @@
 export default {
   languageLabel: 'English',
+  html: {
+    title: 'Post Jaques-Dalcroze Hellerau – Mapping a transnational practice',
+    description: 'The membership lists of the Schule Hellerau-Laxenburg\'s union from 1930 and 1937 show how the practice travelled with its diploma holders and former students many of whom started careers as dancers, teachers of rhythmics or body training.'
+  },
   appTitle: {
-    html: 'Post Jaques-Dalcroze Hellerau – Mapping a transnational practice',
     short: 'Hellerau',
     long: 'Post Jaques-Dalcroze Hellerau',
     subheading: `
