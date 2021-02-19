@@ -26,7 +26,8 @@ export default {
       The membership lists of the school’s union called <em>Der Bund Hellerau-Laxenburg</em> show how the practice 
       travelled with its diploma holders and former students many of whom started careers as dancers, teachers of 
       rhythmics or body training. The map is based on the union's membership lists from 1930 and 1937. Those 
-      were published in newsletters that are deposited in the  <a href="https://www.muk.ac.at/forschung/tanz-archiv.html" target='_blank' rel='noopener noreferrer'>
+      were published in newsletters that are deposited in the  <a href="https://muk.ac.at/forschungsschwerpunkte/kuenstlerische-forschungsprojekte/tanz-archiv.html" 
+      target='_blank' rel='noopener noreferrer'>
       Tanz-Archiv, Musik und Kunst Privatuniversität der Stadt Wien, Sammlung Rosalia Chladek</a>.
     </p>
     <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
@@ -149,7 +150,7 @@ export default {
     }
   },
   tabs: {
-    table: 'table',
+    table: 'people',
     map: 'map',
     production_places: 'production places',
     production_places_heatmap: 'production heatmap',
@@ -283,7 +284,8 @@ export default {
           The membership lists of the school’s union called <em>Der Bund Hellerau-Laxenburg</em> show how the practice 
           travelled with its diploma holders and former students many of whom started careers as dancers, teachers of 
           rhythmics or body training. The map is based on the union's membership lists from 1930 and 1937. Those 
-          were published in newsletters that are deposited in the  <a href="https://www.muk.ac.at/forschung/tanz-archiv.html" target='_blank' rel='noopener noreferrer'>
+          were published in newsletters that are deposited in the  
+          <a href="https://muk.ac.at/forschungsschwerpunkte/kuenstlerische-forschungsprojekte/tanz-archiv.html" target='_blank' rel='noopener noreferrer'>
           Tanz-Archiv, Musik und Kunst Privatuniversität der Stadt Wien, Sammlung Rosalia Chladek</a>.
         </p>
         <p class="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph">
