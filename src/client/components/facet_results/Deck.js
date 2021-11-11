@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import DeckGL from '@deck.gl/react'
-import { ArcLayer } from '@deck.gl/layers'
+import { ArcLayer, PolygonLayer } from '@deck.gl/layers'
 import { HeatmapLayer, HexagonLayer } from '@deck.gl/aggregation-layers'
 import ReactMapGL, { NavigationControl, FullscreenControl, HTMLOverlay } from 'react-map-gl'
 import DeckArcLayerLegend from './DeckArcLayerLegend'
@@ -20,12 +20,12 @@ import { purple } from '@material-ui/core/colors'
 */
 
 const styles = theme => ({
-  root: {
+  root: props => ({
     height: 400,
-    [theme.breakpoints.up('md')]: {
-      height: 'calc(100% - 72px)'
+    [theme.breakpoints.up(props.layoutConfig.hundredPercentHeightBreakPoint)]: {
+      height: `calc(100% - ${props.layoutConfig.tabHeight}px)`
     }
-  },
+  }),
   spinner: {
     height: 40,
     width: 40,
@@ -42,7 +42,8 @@ const styles = theme => ({
     zIndex: 1
   },
   fullscreenButton: {
-    marginTop: theme.spacing(1)
+    position: 'absolute',
+    top: 105
   }
 })
 
@@ -52,9 +53,9 @@ const styles = theme => ({
 class Deck extends React.Component {
   state = {
     viewport: {
-      longitude: 10.37,
-      latitude: 22.43,
-      zoom: 1,
+      longitude: this.props.center[1],
+      latitude: this.props.center[0],
+      zoom: this.props.zoom,
       pitch: 0,
       bearing: 0,
       width: 100,
@@ -94,6 +95,16 @@ class Deck extends React.Component {
     // }
   }
 
+  componentStateEqualsReduxState = () => {
+    const { viewport } = this.state
+    const { longitude, latitude, zoom } = viewport
+    return (
+      zoom === this.props.zoom &&
+      longitude === this.props.center[1] &&
+      latitude === this.props.center[0]
+    )
+  }
+
   setDialog = info => {
     this.setState({
       dialog: {
@@ -118,8 +129,11 @@ class Deck extends React.Component {
       }
     })
 
-  handleOnViewportChange = viewport =>
-    this.state.mounted && this.setState({ viewport });
+  handleOnViewportChange = viewport => {
+    if (this.state.mounted) {
+      this.setState({ viewport })
+    }
+  }
 
   renderSpinner () {
     if (this.props.fetching || this.props.fetchingInstanceAnalysisData) {
@@ -175,99 +189,137 @@ class Deck extends React.Component {
     } */
     })
 
-  render () {
-    const { classes, mapBoxAccessToken, mapBoxStyle, layerType, fetching, results, showTooltips } = this.props
-    const { hoverInfo } = this.state
-    const showTooltip = showTooltips && hoverInfo && hoverInfo.object
-    const hasData = !fetching && results && results.length > 0 &&
-      ((results[0].lat && results[0].long) || (results[0].from && results[0].to))
+    createPolygonLayer = data =>
+      new PolygonLayer({
+        id: 'polygon-layer',
+        data,
+        extruded: false,
+        pickable: true,
+        stroked: true,
+        filled: true,
+        lineWidthMinPixels: 1,
+        getPolygon: d => d.polygon,
+        getFillColor: d => d.choroplethColor,
+        getLineColor: [80, 80, 80],
+        getLineWidth: 1
+      })
 
-    /* It's OK to create a new Layer instance on every render
+    render () {
+      const { classes, mapBoxAccessToken, mapBoxStyle, layerType, fetching, results, showTooltips } = this.props
+      const { hoverInfo } = this.state
+      const showTooltip = showTooltips && hoverInfo && hoverInfo.object
+      const hasData = !fetching && results && results.length > 0 &&
+      (
+        (results[0].lat && results[0].long) ||
+        (results[0].from && results[0].to) ||
+        results[0].polygon
+      )
+      // console.log(hasData)
+
+      /* It's OK to create a new Layer instance on every render
        https://github.com/uber/deck.gl/blob/master/docs/developer-guide/using-layers.md#should-i-be-creating-new-layers-on-every-render
-    */
-    let layer = null
-    if (hasData) {
-      switch (layerType) {
-        case 'arcLayer':
-          layer = this.createArcLayer(results)
-          break
-        case 'heatmapLayer':
-          layer = this.createHeatmapLayer(results)
-          break
-        case 'hexagonLayer':
-          layer = this.createHexagonLayer(results)
-          break
-        default:
-          layer = this.createHeatmapLayer(results)
-          break
+      */
+      let layer = null
+      if (hasData) {
+        switch (layerType) {
+          case 'arcLayer':
+            layer = this.createArcLayer(results)
+            break
+          case 'heatmapLayer':
+            layer = this.createHeatmapLayer(results)
+            break
+          case 'hexagonLayer':
+            layer = this.createHexagonLayer(results)
+            break
+          case 'polygonLayer':
+            layer = this.createPolygonLayer(results)
+            break
+          default:
+            layer = this.createHeatmapLayer(results)
+            break
+        }
       }
-    }
-    return (
-      <div className={classes.root}>
-        <ReactMapGL
-          {...this.state.viewport}
-          width='100%'
-          height='100%'
-          reuseMaps
-          mapStyle={`mapbox://styles/mapbox/${mapBoxStyle}`}
-          preventStyleDiffing
-          mapboxApiAccessToken={mapBoxAccessToken}
-          onViewportChange={this.handleOnViewportChange}
-        >
-          <div className={classes.navigationContainer}>
-            <NavigationControl />
-            <FullscreenControl
-              className={classes.fullscreenButton}
-              container={document.querySelector('mapboxgl-map')}
-            />
-          </div>
-          {layerType === 'arcLayer' &&
-            <HTMLOverlay redraw={() =>
-              <DeckArcLayerLegend
-                title={this.props.legendTitle}
-                fromText={this.props.legendFromText}
-                toText={this.props.legendToText}
+      return (
+        <div className={classes.root}>
+          <ReactMapGL
+            {...this.state.viewport}
+            width='100%'
+            height='100%'
+            reuseMaps
+            mapStyle={`mapbox://styles/mapbox/${mapBoxStyle}`}
+            preventStyleDiffing
+            mapboxApiAccessToken={mapBoxAccessToken}
+            onViewportChange={this.handleOnViewportChange}
+          >
+            <div className={classes.navigationContainer}>
+              <NavigationControl />
+              <FullscreenControl
+                className={classes.fullscreenButton}
+                container={document.querySelector('mapboxgl-map')}
+              />
+            </div>
+            {layerType === 'arcLayer' &&
+              <HTMLOverlay redraw={() =>
+                <DeckArcLayerLegend
+                  title={this.props.legendTitle}
+                  fromText={this.props.legendFromText}
+                  toText={this.props.legendToText}
+                />}
               />}
-            />}
-          <DeckGL
-            viewState={this.state.viewport}
-            layers={[layer]}
-            getCursor={() => 'initial'}
-          />
-          {this.renderSpinner()}
-          {layerType === 'arcLayer' && this.props.instanceAnalysisData && this.state.dialog.open &&
-            <DeckArcLayerDialog
-              onClose={this.closeDialog.bind(this)}
-              data={this.props.instanceAnalysisData}
-              from={this.state.dialog.from}
-              to={this.state.dialog.to}
-              fromText={this.props.fromText}
-              toText={this.props.toText}
-              countText={this.props.countText}
-              listHeadingSingleInstance={this.props.listHeadingSingleInstance}
-              listHeadingMultipleInstances={this.props.listHeadingMultipleInstances}
-              instanceVariable={[this.props.instanceVariable]}
-              resultClass={this.props.resultClass}
-              facetClass={this.props.facetClass}
-            />}
-          {layerType === 'arcLayer' && showTooltip &&
-            <DeckArcLayerTooltip
-              data={hoverInfo}
-              fromText={this.props.fromText}
-              toText={this.props.toText}
-              countText={this.props.countText}
-              showMoreText={this.props.showMoreText}
-            />}
-        </ReactMapGL>
-      </div>
-    )
-  }
+            <DeckGL
+              viewState={this.state.viewport}
+              layers={[layer]}
+              getCursor={() => 'initial'}
+              {...(layerType === 'polygonLayer'
+                ? {
+                    getTooltip: ({ object }) => object && {
+                      html: `
+                      <h2>${object.prefLabel}</h2>
+                      <div>${object.instanceCount}</div>
+                    `
+                    // style: {
+                    //   backgroundColor: '#f00',
+                    //   fontSize: '0.8em'
+                    // }
+                    }
+                  }
+                : {})
+              }
+            />
+            {this.renderSpinner()}
+            {layerType === 'arcLayer' && this.props.instanceAnalysisData && this.state.dialog.open &&
+              <DeckArcLayerDialog
+                onClose={this.closeDialog.bind(this)}
+                data={this.props.instanceAnalysisData}
+                from={this.state.dialog.from}
+                to={this.state.dialog.to}
+                fromText={this.props.fromText}
+                toText={this.props.toText}
+                countText={this.props.countText}
+                listHeadingSingleInstance={this.props.listHeadingSingleInstance}
+                listHeadingMultipleInstances={this.props.listHeadingMultipleInstances}
+                instanceVariable={[this.props.instanceVariable]}
+                resultClass={this.props.resultClass}
+                facetClass={this.props.facetClass}
+              />}
+            {layerType === 'arcLayer' && showTooltip &&
+              <DeckArcLayerTooltip
+                data={hoverInfo}
+                fromText={this.props.fromText}
+                toText={this.props.toText}
+                countText={this.props.countText}
+                showMoreText={this.props.showMoreText}
+              />}
+          </ReactMapGL>
+        </div>
+      )
+    }
 }
 
 Deck.propTypes = {
   classes: PropTypes.object.isRequired,
   results: PropTypes.array,
-  layerType: PropTypes.oneOf(['arcLayer', 'heatmapLayer', 'hexagonLayer']),
+  layerType: PropTypes.oneOf(['arcLayer', 'heatmapLayer', 'hexagonLayer', 'polygonLayer']),
   tooltips: PropTypes.bool,
   mapBoxAccessToken: PropTypes.string.isRequired,
   mapBoxStyle: PropTypes.string.isRequired,
@@ -284,7 +336,8 @@ Deck.propTypes = {
   legendTitle: PropTypes.string,
   showMoreText: PropTypes.string,
   listHeadingSingleInstance: PropTypes.string,
-  listHeadingMultipleInstances: PropTypes.string
+  listHeadingMultipleInstances: PropTypes.string,
+  layoutConfig: PropTypes.object.isRequired
 }
 
 export const DeckComponent = Deck

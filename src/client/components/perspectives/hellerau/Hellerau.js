@@ -26,7 +26,7 @@ const Hellerau = props => {
         path={[`${props.rootUrl}/${perspective.id}/faceted-search/table`, '/iframe.html']}
         render={routeProps =>
           <ResultTable
-            data={props.facetResults}
+            data={props.perspectiveState}
             facetUpdateID={props.facetData.facetUpdateID}
             resultClass='hellerau'
             facetClass='hellerau'
@@ -42,7 +42,7 @@ const Hellerau = props => {
         path={`${rootUrl}/${perspective.id}/faceted-search/migrations`}
         render={() =>
           <Deck
-            results={props.placesResults.results}
+            results={props.perspectiveState.results}
             facetUpdateID={props.facetData.facetUpdateID}
             instanceAnalysisData={props.placesResults.instanceAnalysisData}
             instanceAnalysisDataUpdateID={props.placesResults.instanceAnalysisDataUpdateID}

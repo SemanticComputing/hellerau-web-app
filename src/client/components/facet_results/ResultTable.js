@@ -17,34 +17,37 @@ import ResultTableHead from './ResultTableHead'
 import TablePagination from '@material-ui/core/TablePagination'
 import ResultTablePaginationActions from './ResultTablePaginationActions'
 import history from '../../History'
-import has from 'lodash'
 
 const styles = theme => ({
-  tableContainer: {
+  tableContainer: props => ({
     overflow: 'auto',
-    width: '100%',
-    height: 'auto',
-    [theme.breakpoints.up('md')]: {
-      height: 'calc(100% - 126px)'
+    '& td, & th': {
+      fontSize: props.layoutConfig.tableFontSize
+    },
+    [theme.breakpoints.up(props.layoutConfig.hundredPercentHeightBreakPoint)]: {
+      height: `calc(100% - ${props.layoutConfig.tabHeight + props.layoutConfig.paginationToolbarHeight + 2}px)`
     },
     backgroundColor: theme.palette.background.paper,
     borderTop: '1px solid rgba(224, 224, 224, 1);'
-  },
+  }),
   paginationRoot: {
     display: 'flex',
     backgroundColor: '#fff',
-    borderTop: '1px solid rgba(224, 224, 224, 1);'
+    borderTop: '1px solid rgba(224, 224, 224, 1);',
+    alignItems: 'center'
   },
   paginationCaption: {
     minWidth: 110
   },
-  paginationToolbar: {
-    [theme.breakpoints.down('xs')]: {
+  paginationToolbar: props => ({
+    '& p': { fontSize: '0.75rem' },
+    minHeight: props.layoutConfig.paginationToolbarHeight,
+    [theme.breakpoints.down(480)]: {
       display: 'flex',
       flexWrap: 'wrap',
-      height: 100
+      height: 60
     }
-  },
+  }),
   progressContainer: {
     width: '100%',
     height: 'calc(100% - 72px)',
@@ -94,7 +97,7 @@ class ResultTable extends React.Component {
 
     // then update app state and url accordingly
     this.props.updatePage(this.props.resultClass, page)
-    history.push({
+    history.replace({
       pathname: `${this.props.rootUrl}/${this.props.resultClass}/faceted-search/table`,
       search: `?page=${page}`
     })
@@ -109,7 +112,7 @@ class ResultTable extends React.Component {
     // always fetch new results when page has updated
     if (prevProps.data.page !== this.props.data.page) {
       this.fetchResults()
-      history.push({
+      history.replace({
         pathname: `${this.props.rootUrl}/${this.props.resultClass}/faceted-search/table`,
         search: `?page=${this.props.data.page}`
       })
@@ -166,7 +169,11 @@ class ResultTable extends React.Component {
     }
   }
 
-  handleExpandRow = rowId => () => {
+  handleExpandRow = rowId => event => this.updateExpanedRows(rowId)
+
+  handleExpandRowFromChildComponent = rowId => this.updateExpanedRows(rowId)
+
+  updateExpanedRows = rowId => {
     const expandedRows = this.state.expandedRows
     if (expandedRows.has(rowId)) {
       expandedRows.delete(rowId)
@@ -177,48 +184,66 @@ class ResultTable extends React.Component {
   }
 
   rowRenderer = row => {
-    const { classes } = this.props
+    const { classes, screenSize } = this.props
     const expanded = this.state.expandedRows.has(row.id)
     let hasExpandableContent = false
     const dataCells = this.props.data.properties.map(column => {
+      const {
+        id, valueType, makeLink, externalLink, sortValues, sortBy, numberedList, minWidth,
+        linkAsButton, collapsedMaxWords, sourceExternalLink, renderAsHTML, HTMLParserTask
+      } = column
+      let { previewImageHeight } = column
+      if (screenSize === 'xs' || screenSize === 'sm') {
+        previewImageHeight = 50
+      }
       if (column.onlyOnInstancePage) { return null }
       const columnData = row[column.id] == null ? '-' : row[column.id]
       const isArray = Array.isArray(columnData)
       if (isArray) {
         hasExpandableContent = true
       }
-      if (!isArray &&
-        columnData !== '-' &&
-        column.valueType === 'string' &&
-        column.collapsedMaxWords &&
-        columnData.split(' ').length > column.collapsedMaxWords
-      ) {
-        hasExpandableContent = true
+      // if there are multiple images, they can be viewed by clicking the preview image,
+      // not by expanding
+      if (column.valueType === 'image' && Array.isArray(columnData)) {
+        hasExpandableContent = false
+      }
+      let shortenLabel = false
+      // check if label should be shortened in ResultTableCell
+      if (!isArray && column.collapsedMaxWords && columnData !== '-') {
+        if (column.valueType === 'string' && columnData.split(' ').length > column.collapsedMaxWords) {
+          hasExpandableContent = true
+          shortenLabel = !expanded // shorten label only if the cell is not expanded
+        }
+        if (column.valueType === 'object' && columnData.prefLabel.split(' ').length > column.collapsedMaxWords) {
+          hasExpandableContent = true
+          shortenLabel = !expanded // shorten label only if the cell is not expanded
+        }
       }
       return (
         <ResultTableCell
-          key={column.id}
-          columnId={column.id}
+          key={id}
+          rowId={row.id}
+          columnId={id}
           data={columnData}
-          valueType={column.valueType}
-          makeLink={column.makeLink}
-          externalLink={column.externalLink}
-          sortValues={column.sortValues}
-          sortBy={column.sortBy}
-          numberedList={column.numberedList}
-          minWidth={column.minWidth}
-          previewImageHeight={column.previewImageHeight}
+          valueType={valueType}
+          makeLink={makeLink}
+          externalLink={externalLink}
+          sortValues={sortValues}
+          sortBy={sortBy}
+          numberedList={numberedList}
+          minWidth={minWidth}
+          previewImageHeight={previewImageHeight}
           container='cell'
           expanded={expanded}
-          linkAsButton={has(column, 'linkAsButton')
-            ? column.linkAsButton
-            : null}
-          collapsedMaxWords={has(column, 'collapsedMaxWords')
-            ? column.collapsedMaxWords
-            : null}
-          renderAsHTML={has(column, 'renderAsHTML')
-            ? column.renderAsHTML
-            : null}
+          onExpandClick={this.handleExpandRowFromChildComponent}
+          linkAsButton={linkAsButton}
+          collapsedMaxWords={collapsedMaxWords}
+          shortenLabel={shortenLabel}
+          showSource={false}
+          sourceExternalLink={sourceExternalLink}
+          renderAsHTML={renderAsHTML}
+          HTMLParserTask={HTMLParserTask}
+          referencedTerm={columnData.referencedTerm}
         />
       )
     })
@@ -262,6 +287,10 @@ class ResultTable extends React.Component {
           labelRowsPerPage={intl.get('table.rowsPerPage')}
           rowsPerPageOptions={[5, 10, 15, 20, 25, 30, 50, 100]}
           page={page === -1 || resultCount === 0 ? 0 : page}
+          SelectProps={{
+            inputProps: { 'aria-label': 'rows per page' },
+            native: true
+          }}
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleOnChangeRowsPerPage}
           ActionsComponent={ResultTablePaginationActions}
@@ -272,7 +301,8 @@ class ResultTable extends React.Component {
               <div className={classes.progressContainer}>
                 <CircularProgress style={{ color: purple[500] }} thickness={5} />
               </div>
-            ) : (
+              )
+            : (
               <Table size='small'>
                 <ResultTableHead
                   resultClass={this.props.resultClass}
@@ -286,7 +316,7 @@ class ResultTable extends React.Component {
                   {paginatedResults.map(row => this.rowRenderer(row))}
                 </TableBody>
               </Table>
-            )}
+              )}
         </div>
       </>
     )

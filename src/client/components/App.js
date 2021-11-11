@@ -1,13 +1,14 @@
 import React from 'react'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import SemanticPortal from '../containers/SemanticPortal'
-// import deepPurple from '@material-ui/core/colors/deepPurple'
-// import teal from '@material-ui/core/colors/teal'
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#7f0000'
+      main: '#212121'
+    },
+    secondary: {
+      main: '#EB1806'
     }
   },
   overrides: {
@@ -24,6 +25,18 @@ const theme = createMuiTheme({
         }
       }
     },
+    MuiAccordionSummary: {
+      content: {
+        '&$expanded': {
+          marginTop: 4
+        }
+      },
+      expandIcon: {
+        '&$expanded': {
+          marginTop: -16
+        }
+      }
+    },
     MuiButton: {
       endIcon: {
         marginLeft: 0
@@ -36,8 +49,8 @@ const theme = createMuiTheme({
     },
     MuiTableCell: {
       sizeSmall: {
-        paddingTop: 2,
-        paddingBottom: 2
+        paddingTop: 0,
+        paddingBottom: 0
       }
     }
   }

@@ -23,6 +23,14 @@ export const jenaQuery = `
   }
 `
 
+export const fullTextQuery = `
+  SELECT *
+  WHERE {
+    <QUERY>
+    <RESULT_SET_PROPERTIES>
+  }
+`
+
 export const facetResultSetQuery = `
   SELECT *
   WHERE {
@@ -62,11 +70,7 @@ export const facetValuesQuery = `
       }
       FILTER(BOUND(?id))
       <FACET_VALUE_FILTER>
-      OPTIONAL {
-        ?id <FACET_LABEL_PREDICATE> ?prefLabel_
-        <FACET_LABEL_FILTER>
-      }
-      BIND(COALESCE(STR(?prefLabel_), STR(?id)) AS ?prefLabel)
+      <LABELS>
     }
     UNION
     {
@@ -126,11 +130,11 @@ export const facetValuesRange = `
 `
 
 export const sitemapInstancePageQuery = `
-  SELECT ?path 
+  SELECT DISTINCT ?path 
   WHERE {
     VALUES ?resultClass { <RESULT_CLASS> }
     ?uri a ?resultClass .
     BIND(CONCAT("<PERSPECTIVE>/page/", REPLACE(STR(?uri), "^.*\\\\/(.+)", "$1"), "/<DEFAULT_TAB>") AS ?path)
   }
-  # LIMIT 100
+  LIMIT 100
 `

@@ -94,7 +94,7 @@ paths:
         name: resultClass
         schema: 
           type: string
-          example: perspective1
+          example: placesMsProduced
         required: true
         description: The class of the results
       requestBody:
@@ -191,7 +191,7 @@ paths:
                 type: object
                 properties: 
                   data: 
-                    type: integer
+                    type: string
                   sparqlQuery:
                     type: string
                   resultClass: 
@@ -210,12 +210,14 @@ paths:
           name: facetClass
           schema: 
             type: string
+            example: perspective1
           required: true
           description: The class of the facet
         - in: path
           name: id
           schema: 
             type: string
+            example: language
           required: true
           description: The id of the facet
       requestBody:
@@ -227,8 +229,10 @@ paths:
               properties:
                 sortBy:
                  type: string
+                 example: instanceCount
                 sortDirection:
                   type: string 
+                  example: desc
                 constraints:
                     type: array
                     items: 
@@ -273,12 +277,14 @@ paths:
           name: resultClass
           schema: 
             type: string
+            example: perspective1
           required: true
           description: The class of the resource
         - in: path
           name: uri
           schema: 
             type: string
+            example: http://ldf.fi/mmm/manifestation_singleton/bibale_10003
           required: true
           description: The URI of the resource
       requestBody:
@@ -404,9 +410,78 @@ paths:
             application/json:
               schema:
                 type: array
+  /fha-wms:
+    get:
+      summary: Route for password protected WMS layers.
+      parameters:
+        - in: query
+          name: service
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: request
+          schema:
+            type: string
+          required: true 
+        - in: query
+          name: layers
+          schema:
+            type: string
+          required: true  
+        - in: query
+          name: styles
+          schema:
+            type: string
+          allowEmptyValue : true
+          required: true  
+        - in: query
+          name: format
+          schema:
+            type: string
+          required: true    
+        - in: query
+          name: transparent
+          schema:
+            type: boolean
+          required: true
+        - in: query
+          name: version
+          schema:
+            type: string
+          required: true   
+        - in: query
+          name: width
+          schema:
+            type: number
+          required: true
+        - in: query
+          name: height
+          schema:
+            type: number
+          required: true
+        - in: query
+          name: crs
+          schema:
+            type: string
+          required: true 
+        - in: query
+          name: bbox
+          schema:
+            type: string
+          allowReserved: true  
+          required: true       
+      responses:
+        '200':
+          description: Image
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary     
   /nls-wmts:
     get:
-      summary: Route for password protected WMTS layers. 
+      summary: Route for NLS WMTS API. Only for contract customers. 
       parameters:
         - in: query
           name: layerID
@@ -434,15 +509,57 @@ paths:
           content:
             application/json:
               schema:
-                type: array              
-  /void/{perspectiveID}:
+                type: array    
+  /nls-wmts-open:
+    get:
+      summary: Route for NLS WMTS API, free but requires an API key.
+      parameters:
+        - in: query
+          name: layerID
+          schema: 
+            type: string
+          required: true
+        - in: query
+          name: x
+          schema: 
+            type: string
+          required: true
+        - in: query
+          name: y 
+          schema: 
+            type: string
+          required: true
+        - in: query
+          name: z
+          schema: 
+            type: string
+          required: true  
+      responses:
+        '200':
+          description: An array of GeoJSON layers.
+          content:
+            application/json:
+              schema:
+                type: array                    
+  /nls-vectortiles-open:
+    get:
+      summary: Route for NLS vectortiles API, free but requires an API key. 
+      responses:
+        '200':
+          description: Styles for vector tiles as JSON
+          content:
+            application/json:
+              schema:
+                type: object
+  /void/{resultClass}:
     get:
       summary: Retrieve a VoID description
       parameters:
         - in: path
-          name: perspectiveID
+          name: resultClass
           schema: 
             type: string
+            example: perspective1KnowledgeGraphMetadata
           required: true
       responses:
         '200':

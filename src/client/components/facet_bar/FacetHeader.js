@@ -30,6 +30,9 @@ const styles = theme => ({
     // justifyContent: 'space-between',
     width: '100%'
   },
+  facetLabel: props => ({
+    fontSize: '0.875rem'
+  }),
   facetValuesContainerTen: {
     height: 345,
     padding: theme.spacing(1)
@@ -55,6 +58,7 @@ class FacetHeader extends React.Component {
   }
 
   handleMenuButtonClick = event => {
+    event.stopPropagation()
     this.setState({ anchorEl: event.currentTarget })
   };
 
@@ -66,7 +70,8 @@ class FacetHeader extends React.Component {
         sortDirection = 'asc' // default sort direction when sorting by prefLabel
       } else {
         sortDirection = this.props.facet.sortDirection === 'asc'
-          ? 'desc' : 'asc'
+          ? 'desc'
+          : 'asc'
       }
     }
     if (buttonID === 'instanceCount') {
@@ -74,7 +79,8 @@ class FacetHeader extends React.Component {
         sortDirection = 'desc' // default sort direction when sorting by instanceCount
       } else {
         sortDirection = this.props.facet.sortDirection === 'asc'
-          ? 'desc' : 'asc'
+          ? 'desc'
+          : 'asc'
       }
     }
     this.props.updateFacetOption({
@@ -294,6 +300,7 @@ class FacetHeader extends React.Component {
             icon={<PieChartIcon />}
             tooltip={intl.get('facetBar.pieChart.tooltip')}
             dialogTitle={this.props.facetLabel}
+            layoutConfig={this.props.layoutConfig}
           />}
         {barChartButton &&
           <ChartDialog
@@ -310,6 +317,7 @@ class FacetHeader extends React.Component {
             xaxisTitle={intl.get(`facetBar.barChart.${this.props.facetID}.xaxisTitle`)}
             yaxisTitle={intl.get(`facetBar.barChart.${this.props.facetID}.yaxisTitle`)}
             seriesTitle={intl.get(`facetBar.barChart.${this.props.facetID}.seriesTitle`)}
+            layoutConfig={this.props.layoutConfig}
           />}
         {lineChartButton &&
           <ChartDialog
@@ -326,11 +334,14 @@ class FacetHeader extends React.Component {
             xaxisTitle={intl.get(`facetBar.lineChart.${this.props.facetID}.xaxisTitle`)}
             yaxisTitle={intl.get(`facetBar.lineChart.${this.props.facetID}.yaxisTitle`)}
             seriesTitle={intl.get(`facetBar.lineChart.${this.props.facetID}.seriesTitle`)}
+            lineChartConfig={this.props.facet.lineChartConfig}
+            layoutConfig={this.props.layoutConfig}
           />}
         {menuButtons.length > 0 &&
           <>
             <Tooltip disableFocusListener title={intl.get('facetBar.filterOptions')}>
               <IconButton
+                className='facetMenuButton'
                 aria-label={intl.get('facetBar.filterOptions')}
                 aria-owns={open ? 'facet-option-menu' : undefined}
                 aria-haspopup='true'
@@ -360,12 +371,12 @@ class FacetHeader extends React.Component {
 
     return (
       <div className={classes.headingContainer}>
-        <Typography variant='body1'>{facetLabel} </Typography>
+        <Typography className={classes.facetLabel} variant='body1'>{facetLabel}</Typography>
         <Tooltip
           title={facetDescription}
           enterDelay={300}
         >
-          <IconButton>
+          <IconButton aria-label='description'>
             <InfoIcon />
           </IconButton>
         </Tooltip>
@@ -395,7 +406,8 @@ FacetHeader.propTypes = {
   clearFacet: PropTypes.func,
   updateFacetOption: PropTypes.func,
   facetDescription: PropTypes.string.isRequired,
-  rootUrl: PropTypes.string.isRequired
+  rootUrl: PropTypes.string.isRequired,
+  layoutConfig: PropTypes.object.isRequired
 }
 
 export const FacetHeaderComponent = FacetHeader

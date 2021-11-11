@@ -80,7 +80,7 @@ class TextFacet extends React.Component {
     } else {
       searchButton = (
         <IconButton
-          aria-label={placeholder}
+          aria-label='search'
           onClick={this.handleClick}
           onMouseDown={this.handleMouseDown}
         >
@@ -96,6 +96,7 @@ class TextFacet extends React.Component {
           <Input
             id='adornment-search'
             type='text'
+            aria-label='search'
             value={this.state.value}
             disabled={this.props.someFacetIsFetching}
             onChange={this.handleChange}

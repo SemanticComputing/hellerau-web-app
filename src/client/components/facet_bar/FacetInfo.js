@@ -22,6 +22,10 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing(1)
+  },
+  infoText: {
+    fontWeight: 'bold',
+    fontSize: '1rem'
   }
 })
 
@@ -49,18 +53,30 @@ class FacetInfo extends React.Component {
 
   handleRemoveAllFiltersOnClick = () => this.props.clearAllFacets({ facetClass: this.props.facetClass })
 
+  getTypographyVariant = () => {
+    const { screenSize } = this.props
+    let variant = 'h6'
+    if (screenSize === 'xs' || screenSize === 'sm' || screenSize === 'md' || screenSize === 'lg') {
+      variant = 'body1'
+    }
+    return variant
+  }
+
   render () {
-    const { classes, facetClass, resultClass, resultCount, someFacetIsFetching } = this.props
+    const { classes, facetClass, resultClass, resultCount, someFacetIsFetching, screenSize } = this.props
+    const mobileMode = screenSize === 'xs' || screenSize === 'sm'
     const { facets } = this.props.facetData
     const uriFilters = {}
     const spatialFilters = {}
     const textFilters = {}
     const timespanFilters = {}
+    const dateNoTimespanFilters = {}
     const integerFilters = {}
     let activeUriFilters = false
     let activeSpatialFilters = false
     let activeTextFilters = false
     let activeTimespanFilters = false
+    let activeDateNoTimespanFilters = false
     let activeIntegerFilters = false
     Object.entries(facets).forEach(entry => {
       const [key, value] = entry
@@ -80,6 +96,10 @@ class FacetInfo extends React.Component {
         activeTimespanFilters = true
         timespanFilters[key] = value.timespanFilter
       }
+      if (has(value, 'dateNoTimespanFilter') && value.dateNoTimespanFilter !== null) {
+        activeDateNoTimespanFilters = true
+        dateNoTimespanFilters[key] = value.dateNoTimespanFilter
+      }
       if (has(value, 'integerFilter') && value.integerFilter !== null) {
         activeIntegerFilters = true
         integerFilters[key] = value.integerFilter
@@ -89,17 +109,18 @@ class FacetInfo extends React.Component {
       <div className={classes.root}>
         {this.props.fetchingResultCount
           ? <CircularProgress style={{ color: purple[500] }} thickness={5} size={26} />
-          : <Typography variant='h6'>{intl.get('facetBar.results')}: {resultCount} {intl.get(`perspectives.${resultClass}.facetResultsType`)}</Typography>}
-        <Divider className={classes.facetInfoDivider} />
+          : <Typography component='h2' className={classes.infoText} variant={this.getTypographyVariant()}>{intl.get('facetBar.results')}: {resultCount} {intl.get(`perspectives.${resultClass}.facetResultsType`)}</Typography>}
+        {!mobileMode && <Divider className={classes.facetInfoDivider} />}
         {(activeUriFilters ||
           activeSpatialFilters ||
           activeTextFilters ||
           activeTimespanFilters ||
+          activeDateNoTimespanFilters ||
           activeIntegerFilters
         ) &&
           <>
             <div className={classes.headerContainer}>
-              <Typography variant='h6'>{intl.get('facetBar.activeFilters')}</Typography>
+              <Typography component='h2' variant={this.getTypographyVariant()}>{intl.get('facetBar.activeFilters')}</Typography>
               <Button
                 variant='contained'
                 color='secondary'
@@ -118,6 +139,7 @@ class FacetInfo extends React.Component {
                 spatialFilters={spatialFilters}
                 textFilters={textFilters}
                 timespanFilters={timespanFilters}
+                dateNoTimespanFilters={dateNoTimespanFilters}
                 integerFilters={integerFilters}
                 updateFacetOption={this.props.updateFacetOption}
                 someFacetIsFetching={someFacetIsFetching}
@@ -127,7 +149,7 @@ class FacetInfo extends React.Component {
             </div>
             <Divider className={classes.facetInfoDivider} />
           </>}
-        <Typography variant='h6'>{intl.get('facetBar.narrowDownBy')}:</Typography>
+        {!mobileMode && <Typography component='h2' className={classes.infoText} variant={this.getTypographyVariant()}>{intl.get('facetBar.narrowDownBy')}:</Typography>}
       </div>
     )
   }

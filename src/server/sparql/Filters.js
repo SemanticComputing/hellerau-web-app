@@ -16,7 +16,7 @@ export const generateConstraintsBlock = ({
     const skipFacetID = constrainSelf ? '' : facetID
     const modifiedConstraints = constraints.filter(facet => facet.facetID !== skipFacetID)
     modifiedConstraints.sort((a, b) => a.priority - b.priority)
-    modifiedConstraints.map(c => {
+    modifiedConstraints.forEach(c => {
       switch (c.filterType) {
         case 'textFilter':
           filterStr += generateTextFilter({
@@ -38,7 +38,8 @@ export const generateConstraintsBlock = ({
             inverse: inverse,
             filterTripleFirst,
             selectAlsoSubconcepts: Object.prototype.hasOwnProperty.call(c, 'selectAlsoSubconcepts')
-              ? c.selectAlsoSubconcepts : true, // default behaviour for hierarchical facets, can be controlled via reducers
+              ? c.selectAlsoSubconcepts
+              : true, // default behaviour for hierarchical facets, can be controlled via reducers
             useConjuction: c.useConjuction
           })
           break
@@ -195,16 +196,20 @@ const generateIntegerFilter = ({
 }) => {
   const facetConfig = backendSearchConfig[facetClass].facets[facetID]
   const { start, end } = values
+  const typecasting = facetConfig.typecasting
+    ? facetConfig.typecasting
+    : 'BIND(xsd:integer(?value) as ?valueAsInteger)'
   let integerFilter = ''
   if (start === '') {
-    integerFilter = `xsd:integer(?value) <= ${end}`
+    integerFilter = `?valueAsInteger <= ${end}`
   } else if (end === '') {
-    integerFilter = `xsd:integer(?value) >= ${start}`
+    integerFilter = `?valueAsInteger >= ${start}`
   } else {
-    integerFilter = `xsd:integer(?value) >= ${start} && xsd:integer(?value) <= ${end}`
+    integerFilter = `?valueAsInteger >= ${start} && ?valueAsInteger <= ${end}`
   }
   const filterStr = `
     ?${filterTarget} ${facetConfig.predicate} ?value .
+    ${typecasting}
     FILTER(
       ${integerFilter}
     )
@@ -240,14 +245,14 @@ const generateUriFilter = ({
     const valuesStr = generateValuesForUriFilter({ values: modifiedValues, literal, useConjuction })
     s = useConjuction
       ? generateConjuctionForUriFilter({
-        facetID,
-        predicate,
-        parentProperty,
-        filterTarget,
-        inverse,
-        includeChildren,
-        valuesStr
-      })
+          facetID,
+          predicate,
+          parentProperty,
+          filterTarget,
+          inverse,
+          includeChildren,
+          valuesStr
+        })
       : generateDisjunctionForUriFilter({
         facetID,
         predicate,

@@ -1,15 +1,10 @@
-FROM node:14.15.1-alpine
+FROM node:16.13.0-alpine
 ARG API_URL
 
+# Based on https://nodejs.org/en/docs/guides/nodejs-docker-webapp/
+
 # Create app directory
-RUN mkdir /opt/app && chown node:node /opt/app
-
-RUN apk add --update git && \
-rm -rf /tmp/* /var/cache/apk/*
-
-WORKDIR /opt/app
-
-USER node
+WORKDIR /usr/src/app
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -24,9 +19,13 @@ COPY babel.config.js ./
 COPY src ./src
 
 # Run the scripts defined in package.json
-RUN npm install && API_URL=$API_URL npm run build
+RUN npm install && \ 
+API_URL=$API_URL npm run build
 
 EXPOSE 3001
 
+# https://github.com/nodejs/docker-node/blob/main/docs/BestPractices.md#non-root-user
+USER node
+
 # Express server handles the backend functionality and also serves the React app
-CMD ["node", "/opt/app/dist/server"]
+CMD ["node", "/usr/src/app/dist/server"]
