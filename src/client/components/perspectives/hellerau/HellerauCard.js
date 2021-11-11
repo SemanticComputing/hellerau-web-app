@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
 /**
  * A component for generating a Material-UI Card for a perspective on the portal's landing page.
  */
-const MainCard = props => {
+const HellerauCard = props => {
   const classes = useStyles(props)
   const { perspective, cardHeadingVariant } = props
   const xsScreen = useMediaQuery(theme => theme.breakpoints.down('xs'))
@@ -103,10 +103,10 @@ const MainCard = props => {
   )
 }
 
-MainCard.propTypes = {
+HellerauCard.propTypes = {
   perspective: PropTypes.object.isRequired,
   cardHeadingVariant: PropTypes.string.isRequired,
   rootUrl: PropTypes.string.isRequired
 }
 
-export default MainCard
+export default HellerauCard

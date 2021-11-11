@@ -47,9 +47,9 @@ import {
   fetchKnowledgeGraphMetadata
 } from '../actions'
 import { filterResults } from '../selectors'
-import { perspectiveConfig } from '../configs/sampo/PerspectiveConfig'
-import { perspectiveConfigOnlyInfoPages } from '../configs/sampo/PerspectiveConfigOnlyInfoPages'
-import { rootUrl, layoutConfig } from '../configs/sampo/GeneralConfig'
+import { perspectiveConfig } from '../configs/hellerau/PerspectiveConfig'
+import { perspectiveConfigOnlyInfoPages } from '../configs/hellerau/PerspectiveConfigOnlyInfoPages'
+import { rootUrl, layoutConfig } from '../configs/hellerau/GeneralConfig'
 
 // ** General components **
 // import InfoHeader from '../components/main_layout/InfoHeader'
@@ -72,13 +72,13 @@ const FacetBar = lazy(() => import('../components/facet_bar/FacetBar'))
 // import InstanceHomePage from '../components/perspectives/sampo/InstanceHomePage'
 // import Footer from '../components/perspectives/sampo/Footer'
 // import KnowledgeGraphMetadataTable from '../components/perspectives/sampo/KnowledgeGraphMetadataTable'
-const portalID = 'sampo'
+const portalID = 'hellerau'
 const TopBar = lazy(() => import('../components/perspectives/' + portalID + '/TopBar'))
 const Main = lazy(() => import('../components/perspectives/' + portalID + '/Main'))
 const FacetedSearchPerspective = lazy(() => import('../components/perspectives/' + portalID + '/FacetedSearchPerspective'))
-const FullTextSearch = lazy(() => import('../components/perspectives/' + portalID + '/FullTextSearch'))
-const ClientFSPerspective = lazy(() => import('../components/perspectives/' + portalID + '/client_fs/ClientFSPerspective'))
-const ClientFSMain = lazy(() => import('../components/perspectives/' + portalID + '/client_fs/ClientFSMain'))
+// const FullTextSearch = lazy(() => import('../components/perspectives/' + portalID + '/FullTextSearch'))
+// const ClientFSPerspective = lazy(() => import('../components/perspectives/' + portalID + '/client_fs/ClientFSPerspective'))
+// const ClientFSMain = lazy(() => import('../components/perspectives/' + portalID + '/client_fs/ClientFSMain'))
 const InstanceHomePage = lazy(() => import('../components/perspectives/' + portalID + '/InstanceHomePage'))
 const Footer = lazy(() => import('../components/perspectives/' + portalID + '/Footer'))
 const KnowledgeGraphMetadataTable = lazy(() => import('../components/perspectives/' + portalID + '/KnowledgeGraphMetadataTable'))
@@ -252,7 +252,7 @@ const SemanticPortal = props => {
   if (lgScreen) { screenSize = 'lg' }
   if (xlScreen) { screenSize = 'xl' }
   const rootUrlWithLang = `${rootUrl}/${props.options.currentLocale}`
-  const noClientFSResults = props.clientFSState.results == null
+  // const noClientFSResults = props.clientFSState.results == null
 
   useEffect(() => {
     document.title = intl.get('html.title')
@@ -306,7 +306,7 @@ const SemanticPortal = props => {
             }}
           />
           {/* route for full text search results */}
-          <Route
+          {/* <Route
             path={`${rootUrlWithLang}/full-text-search`}
             render={routeProps =>
               <FullTextSearch
@@ -317,7 +317,7 @@ const SemanticPortal = props => {
                 rootUrl={rootUrlWithLang}
                 layoutConfig={layoutConfig}
               />}
-          />
+          /> */}
           {/* routes for faceted search perspectives */}
           {perspectiveConfig.map(perspective => {
             if (!has(perspective, 'externalUrl') && perspective.id !== 'placesClientFS') {
@@ -468,6 +468,7 @@ const SemanticPortal = props => {
                 </React.Fragment>
               )
             }
+            return null
           })}
           {/* create routes for classes that have only info pages and no faceted search perspective */}
           {perspectiveConfigOnlyInfoPages.map(perspective =>
@@ -530,7 +531,7 @@ const SemanticPortal = props => {
               />
             </Switch>
           )}
-          <Route
+          {/* <Route
             path={`${rootUrlWithLang}/clientFSPlaces/federated-search`}
             render={routeProps =>
               <>
@@ -583,7 +584,7 @@ const SemanticPortal = props => {
                 <Footer layoutConfig={layoutConfig} />
               </>}
 
-          />
+          /> */}
           {/* create routes for info buttons */}
           {/* <Route
               path={`${rootUrlWithLang}/feedback`}

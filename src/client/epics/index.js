@@ -11,8 +11,7 @@ import {
 } from 'rxjs/operators'
 import { combineEpics, ofType } from 'redux-observable'
 import intl from 'react-intl-universal'
-import localeEN from '../translations/sampo/localeEN.json'
-import localeFI from '../translations/sampo/localeFI.json'
+import localeEN from '../translations/hellerau/localeEN'
 import { stateToUrl, pickSelectedDatasets } from '../helpers/helpers'
 import querystring from 'querystring'
 import {
@@ -62,8 +61,7 @@ import { documentFinderAPIUrl } from '../configs/sampo/GeneralConfig'
 const apiUrl = process.env.API_URL
 
 export const availableLocales = {
-  en: localeEN,
-  fi: localeFI
+  en: localeEN
 }
 
 let backendErrorText = null

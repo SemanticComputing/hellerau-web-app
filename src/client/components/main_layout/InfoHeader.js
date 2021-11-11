@@ -7,8 +7,8 @@ import AccordionDetails from '@material-ui/core/AccordionDetails'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
 // import Divider from '@material-ui/core/Divider';
-// import IconButton from '@material-ui/core/IconButton'
-// import InfoIcon from '@material-ui/icons/InfoOutlined'
+import IconButton from '@material-ui/core/IconButton'
+import InfoIcon from '@material-ui/icons/InfoOutlined'
 import intl from 'react-intl-universal'
 
 const useStyles = makeStyles(theme => ({

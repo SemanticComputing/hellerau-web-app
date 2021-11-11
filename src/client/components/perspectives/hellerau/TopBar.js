@@ -3,51 +3,48 @@ import PropTypes from 'prop-types'
 import intl from 'react-intl-universal'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
+// import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 import { makeStyles } from '@material-ui/core/styles'
-import MoreIcon from '@material-ui/icons/MoreVert'
+// import MoreIcon from '@material-ui/icons/MoreVert'
 import Button from '@material-ui/core/Button'
 import { Link, NavLink } from 'react-router-dom'
 // import TopBarSearchField from '../../main_layout/TopBarSearchField'
 // import TopBarInfoButton from '../../main_layout/TopBarInfoButton'
-import TopBarLanguageButton from '../../main_layout/TopBarLanguageButton'
+// import TopBarLanguageButton from '../../main_layout/TopBarLanguageButton'
 import Divider from '@material-ui/core/Divider'
 import { has } from 'lodash'
 import secoLogo from '../../../img/logos/seco-logo-48x50.png'
-import { showLanguageButton /* feedbackLink */ } from '../../../configs/hellerau/GeneralConfig'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   grow: {
     flexGrow: 1
   },
-  toolbar: {
+  topBarToolbar: props => ({
+    minHeight: props.layoutConfig.topBar.reducedHeight,
+    [theme.breakpoints.up(props.layoutConfig.reducedHeightBreakpoint)]: {
+      minHeight: props.layoutConfig.topBar.defaultHeight
+    },
     paddingLeft: theme.spacing(1.5),
     paddingRight: theme.spacing(1.5)
-  },
-  sectionDesktop: {
+  }),
+  sectionDesktop: props => ({
     display: 'none',
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up(props.layoutConfig.topBar.mobileMenuBreakpoint)]: {
       display: 'flex'
     }
-  },
+  }),
   link: {
     textDecoration: 'none'
   },
-  sectionMobile: {
+  sectionMobile: props => ({
     display: 'flex',
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up(props.layoutConfig.topBar.mobileMenuBreakpoint)]: {
       display: 'none'
     }
-  },
-  homeButtonText: {
-    whiteSpace: 'nowrap',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1rem'
-    }
-  },
+  }),
   appBarButton: {
     whiteSpace: 'nowrap',
     color: 'white !important',
@@ -61,11 +58,49 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     borderLeft: '2px solid white'
   },
-  secoLogo: {
+  secoLogo: props => ({
     marginLeft: theme.spacing(1),
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down(props.layoutConfig.topBar.mobileMenuBreakpoint)]: {
       display: 'none'
     }
+  }),
+  secoLogoImage: props => ({
+    height: 32,
+    [theme.breakpoints.up(props.layoutConfig.reducedHeightBreakpoint)]: {
+      height: 50
+    }
+  }),
+  mainLogo: props => ({
+    height: 23,
+    [theme.breakpoints.up(props.layoutConfig.reducedHeightBreakpoint)]: {
+      height: 40
+    },
+    marginRight: theme.spacing(1)
+  }),
+  mainLogoButtonRoot: {
+    paddingLeft: 0,
+    [theme.breakpoints.down('xs')]: {
+      minWidth: 48
+    }
+  },
+  mainLogoButtonLabel: {
+    justifyContent: 'left'
+  },
+  mainLogoTypography: {
+    // set color and background explicitly to keep Google Lighthouse happy
+    color: '#fff',
+    background: theme.palette.primary.main,
+    whiteSpace: 'nowrap',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.25rem',
+      fontWeight: 600
+    }
+    // [theme.breakpoints.down('xs')]: {
+    //     display: 'none'
+    // }
+  },
+  mobileMenuButton: {
+    padding: 12
   }
 }))
 
@@ -76,11 +111,11 @@ const useStyles = makeStyles((theme) => ({
 const TopBar = props => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
-  const { /* perspectives */ currentLocale, availableLocales /* rootUrl */ } = props
-  const classes = useStyles()
+  const { perspectives, currentLocale, availableLocales, rootUrl } = props
+  const classes = useStyles(props)
   const handleMobileMenuOpen = event => setMobileMoreAnchorEl(event.currentTarget)
   const handleMobileMenuClose = () => setMobileMoreAnchorEl(null)
-  // const clientFSMode = props.location.pathname.indexOf('clientFS') !== -1
+  const clientFSMode = props.location.pathname.indexOf('clientFS') !== -1
 
   // https://material-ui.com/components/buttons/#third-party-routing-library
   const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />)
@@ -164,11 +199,11 @@ const TopBar = props => {
     >
       {perspectives.map(perspective => perspective.isHidden ? null : renderMobileMenuItem(perspective))}
       <Divider />
-      {/* {renderMobileMenuItem({
+      {renderMobileMenuItem({
         id: 'feedback',
-        externalUrl: feedbackLink,
+        externalUrl: props.layoutConfig.topBar.feedbackLink,
         label: intl.get('topBar.feedback')
-      })} */}
+      })}
       {/* <MenuItem
         key='feedback'
         component={AdapterLink}
@@ -212,10 +247,20 @@ const TopBar = props => {
       {/* Add an empty Typography element to ensure that that the MuiTypography class is loaded for
          any lower level components that use MuiTypography class only in translation files */}
       <Typography />
-      <AppBar position='absolute'>
-        <Toolbar className={classes.toolbar}>
-          <Button component={AdapterLink} to='/'>
-            <Typography className={classes.homeButtonText} variant='h6'>{intl.get('appTitle.short')}</Typography>
+      <AppBar position='static'>
+        <Toolbar className={classes.topBarToolbar}>
+          <Button
+            component={AdapterLink} to='/'
+            classes={{
+              root: classes.mainLogoButtonRoot,
+              label: classes.mainLogoButtonLabel
+            }}
+            onClick={() => clientFSMode ? props.clientFSClearResults() : null}
+          >
+            {/* <img className={classes.mainLogo} src={} /> */}
+            <Typography className={classes.mainLogoTypography} variant='h6'>
+              {props.xsScreen ? intl.get('appTitle.mobile') : intl.get('appTitle.short')}
+            </Typography>
           </Button>
           {/* {!clientFSMode &&
             <TopBarSearchField
@@ -225,15 +270,15 @@ const TopBar = props => {
               rootUrl={rootUrl}
             />} */}
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            {/* {perspectives.map((perspective, index) => perspective.isHidden ? null : renderDesktopTopMenuItem(perspective, index))} */}
-            {/* <div className={classes.appBarDivider} /> */}
-            {/* {renderDesktopTopMenuItem({
+          {/* <div className={classes.sectionDesktop}>
+            {perspectives.map((perspective, index) => perspective.isHidden ? null : renderDesktopTopMenuItem(perspective, index))}
+            <div className={classes.appBarDivider} />
+            {renderDesktopTopMenuItem({
               id: 'feedback',
-              externalUrl: feedbackLink,
+              externalUrl: props.layoutConfig.topBar.feedbackLink,
               label: intl.get('topBar.feedback')
-            })} */}
-            {/* <TopBarInfoButton rootUrl={props.rootUrl} />
+            })}
+            <TopBarInfoButton rootUrl={props.rootUrl} />
             <Button
               className={classes.appBarButton}
               component={AdapterNavLink}
@@ -242,31 +287,48 @@ const TopBar = props => {
               activeClassName={classes.appBarButtonActive}
             >
               {intl.get('topBar.instructions')}
-            </Button> */}
-            {showLanguageButton &&
+            </Button>
+            {props.layoutConfig.topBar.showLanguageButton &&
               <TopBarLanguageButton
                 currentLocale={currentLocale}
                 availableLocales={availableLocales}
                 loadLocales={props.loadLocales}
                 location={props.location}
               />}
-          </div>
+          </div> */}
           <a
             className={classes.secoLogo}
             href='https://seco.cs.aalto.fi'
             target='_blank'
             rel='noopener noreferrer'
           >
-            <Button><img src={secoLogo} /></Button>
+            <Button aria-label='link to Semantic Computing research group homepage'>
+              <img
+                className={classes.secoLogoImage}
+                src={secoLogo}
+                alt='Semantic Computing research group logo'
+              />
+            </Button>
           </a>
-          <div className={classes.sectionMobile}>
-            <IconButton aria-haspopup='true' onClick={handleMobileMenuOpen} color='inherit'>
+          {/* <div className={classes.sectionMobile}>
+            {props.layoutConfig.topBar.showLanguageButton &&
+              <TopBarLanguageButton
+                currentLocale={currentLocale}
+                availableLocales={availableLocales}
+                loadLocales={props.loadLocales}
+                location={props.location}
+              />}
+            <IconButton
+              aria-label='display more actions' color='inherit'
+              className={classes.mobileMenuButton}
+              onClick={handleMobileMenuOpen}
+            >
               <MoreIcon />
             </IconButton>
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
-      {/* {renderMobileMenu(perspectives)} */}
+      {renderMobileMenu(perspectives)}
     </div>
   )
 }
@@ -307,7 +369,8 @@ TopBar.propTypes = {
   /**
    * Root url of the application.
    */
-  rootUrl: PropTypes.string.isRequired
+  rootUrl: PropTypes.string.isRequired,
+  layoutConfig: PropTypes.object.isRequired
 }
 
 export default TopBar

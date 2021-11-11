@@ -55,7 +55,7 @@ import {
   emloPlacePropertiesInfoWindow,
   emloPeopleRelatedTo
 } from './sparql_queries/SparqlQueriesEmloPlaces'
-import { hellerauMigrationsQuery } from './sparql_queries/SparqlQueriesHellerau'
+import { hellerauMigrationsQuery, hellerauMigrationsDialogQuery } from './sparql_queries/SparqlQueriesHellerau'
 import { speechesByYearAndPartyQuery } from './sparql_queries/SparqlQueriesSpeeches'
 import { federatedSearchDatasets } from './sparql_queries/SparqlQueriesFederatedSearch'
 import { fullTextSearchProperties } from './sparql_queries/SparqlQueriesFullText'
@@ -160,6 +160,20 @@ export const backendSearchConfig = {
     perspectiveID: 'perspective1',
     q: migrationsQuery,
     filterTarget: 'manuscript',
+    resultMapper: makeObjectList,
+    postprocess: {
+      func: linearScale,
+      config: {
+        variable: 'instanceCount',
+        minAllowed: 3,
+        maxAllowed: 30
+      }
+    }
+  },
+  hellerauMigrations: {
+    perspectiveID: 'hellerau',
+    q: hellerauMigrationsQuery,
+    filterTarget: 'person',
     resultMapper: makeObjectList,
     postprocess: {
       func: linearScale,

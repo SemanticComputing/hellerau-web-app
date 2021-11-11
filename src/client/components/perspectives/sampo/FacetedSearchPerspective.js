@@ -11,7 +11,7 @@ const Perspective2 = lazy(() => import('./Perspective2'))
 const Perspective3 = lazy(() => import('./Perspective3'))
 const Finds = lazy(() => import('./Finds'))
 const EmloActors = lazy(() => import('./EmloActors'))
-const Hellerau = lazy(() => import('./Hellerau'))
+const Hellerau = lazy(() => import('../hellerau/Hellerau'))
 
 /**
  * A component for creating a faceted search perspective for a semantic portal.

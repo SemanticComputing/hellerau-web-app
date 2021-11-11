@@ -20,6 +20,12 @@ export const INITIAL_STATE = {
   instanceAnalysisData: null,
   instanceAnalysisDataUpdateID: 0,
   instanceSparqlQuery: null,
+  maps: {
+    hellerauMigrations: {
+      center: [22.43, 10.37],
+      zoom: 2
+    }
+  },
   properties: [
     {
       id: 'uri',
@@ -61,7 +67,8 @@ export const INITIAL_STATE = {
 }
 
 const resultClasses = new Set([
-  'hellerau'
+  'hellerau',
+  'hellerauMigrations'
 ])
 
 const hellerau = (state = INITIAL_STATE, action) => {
