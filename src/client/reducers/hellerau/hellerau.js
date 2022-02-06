@@ -68,7 +68,8 @@ export const INITIAL_STATE = {
 
 const resultClasses = new Set([
   'hellerau',
-  'hellerauMigrations'
+  'hellerauMigrations',
+  'hellerauMigrationsDialog'
 ])
 
 const hellerau = (state = INITIAL_STATE, action) => {
