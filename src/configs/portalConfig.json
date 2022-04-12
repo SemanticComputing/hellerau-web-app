@@ -1,22 +1,9 @@
 {
-    "portalID": "sampo",
+    "portalID": "hellerau",
     "rootUrl": "",
     "perspectives": {
         "searchPerspectives": [
-            "perspective1",
-            "perspective2",
-            "perspective3",
-            "perspective4",
-            "fullTextSearch"
-        ],
-        "onlyInstancePages": [
-            "manuscripts",
-            "collections",
-            "works",
-            "expressions",
-            "events",
-            "actors",
-            "places"
+            "hellerau"
         ]
     },
     "localeConfig": {
@@ -26,22 +13,10 @@
             {
                 "id": "en",
                 "label": "English",
-                "filename": "localeEN.json"
-            },
-            {
-                "id": "fi",
-                "label": "English",
-                "filename": "localeFI.json"
+                "filename": "localeEN",
+                "format": "js"
             }
         ]
-    },
-    "sitemapConfig": {
-        "baseUrl": "https://sampo-ui.demo.seco.cs.aalto.fi",
-        "langPrimary": "en",
-        "langSecondary": "fi",
-        "outputDir": "./src/server/sitemap_generator",
-        "sitemapUrl": "https://sampo-ui.demo.seco.cs.aalto.fi/sitemap",
-        "sitemapInstancePageQuery": "sitemapInstancePageQuery"
     },
     "knowledgeGraphMetadataConfig": {
         "showTable": false,
@@ -62,10 +37,8 @@
         "paginationToolbarHeight": 37,
         "tableFontSize": "0.8rem",
         "topBar": {
-            "logoImage": "logos/logo.png",
             "logoTextTransform": "none",
-            "hideLogoTextOnMobile": true,
-            "showLanguageButton": true,
+            "showLanguageButton": false,
             "feedbackLink": "https://link.webropolsurveys.com/...",
             "externalInstructions": false,
             "externalAboutPage": false,
