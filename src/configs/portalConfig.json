@@ -49,7 +49,7 @@
             "mobileMenuBreakpoint": 1360
         },
         "mainPage": {
-            "bannerImage": "main_page/mmm-banner.jpg",
+            "bannerImage": "main_page/hellerau-banner.jpg",
             "bannerBackround": "linear-gradient( rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45) ), url(<BANNER_IMAGE_URL)",
             "bannerMobileHeight": 150,
             "bannerReducedHeight": 220,

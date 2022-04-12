@@ -26,22 +26,22 @@ const Main = props => {
     case 'sm':
       headingVariant = 'h4'
       subheadingVariant = 'h6'
-      descriptionVariant = 'h6'
+      descriptionVariant = 'body1'
       break
     case 'md':
       headingVariant = 'h3'
       subheadingVariant = 'h6'
-      descriptionVariant = 'h6'
+      descriptionVariant = 'body1'
       break
     case 'lg':
       headingVariant = 'h2'
       subheadingVariant = 'h5'
-      descriptionVariant = 'h6'
+      descriptionVariant = 'body1'
       break
     case 'xl':
       headingVariant = 'h1'
       subheadingVariant = 'h4'
-      descriptionVariant = 'h6'
+      descriptionVariant = 'body1'
       break
   }
 
@@ -131,21 +131,9 @@ const Main = props => {
           }
         })}
       >
-        <Box
-          sx={theme => ({
-            paddingBottom: theme.spacing(1)
-          })}
-        >
-          <Typography variant={descriptionVariant} color='textPrimary' paragraph>
-            {intl.getHTML('appDescription')}
-          </Typography>
-          <Typography variant={descriptionVariant} align='center' color='textPrimary' paragraph>
-            {intl.get('selectPerspective')}
-          </Typography>
-        </Box>
         <Grid
           container spacing={screenSize === 'sm' ? 2 : 1}
-          justifyContent={screenSize === 'xs' || screenSize === 'sm' ? 'center' : 'flex-start'}
+          justifyContent='center'
         >
           {perspectives.map(perspective => {
             const hideCard = (has(perspective.hideCardOnFrontPage) && perspective.hideCardOnFrontPage)
@@ -162,6 +150,18 @@ const Main = props => {
             return null
           })}
         </Grid>
+        <Box
+          sx={theme => ({
+            paddingBottom: theme.spacing(1)
+          })}
+        >
+          <Typography variant={descriptionVariant} color='textPrimary' paragraph>
+            {intl.getHTML('appDescription')}
+          </Typography>
+          {/* <Typography variant={descriptionVariant} align='center' color='textPrimary' paragraph>
+            {intl.get('selectPerspective')}
+          </Typography> */}
+        </Box>
         <Box
           sx={theme => ({
             marginTop: theme.spacing(1),

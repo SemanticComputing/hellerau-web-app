@@ -46,7 +46,10 @@ const useStyles = makeStyles(theme => ({
       backgroundPosition: 'center'
     },
     height: '100%',
-    width: '100%'
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }),
   cardMedia: {
     height: 100
@@ -90,13 +93,7 @@ const MainCard = props => {
             component='h2'
             sx={{ color: '#fff' }}
           >
-            {intl.get(`perspectives.${perspective.id}.label`)}
-          </Typography>
-          <Typography
-            component='p'
-            sx={{ color: '#fff' }}
-          >
-            {intl.get(`perspectives.${perspective.id}.shortDescription`)}
+            {intl.get(`perspectives.${perspective.id}.clickToOpenTheMap`)}
           </Typography>
         </Paper>}
       {card &&

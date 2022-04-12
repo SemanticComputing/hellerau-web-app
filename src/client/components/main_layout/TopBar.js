@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import intl from 'react-intl-universal'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
+// import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import MenuItem from '@mui/material/MenuItem'
-import Menu from '@mui/material/Menu'
-import MoreIcon from '@mui/icons-material/MoreVert'
+// import MenuItem from '@mui/material/MenuItem'
+// import Menu from '@mui/material/Menu'
+// import MoreIcon from '@mui/icons-material/MoreVert'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { useTheme } from '@mui/material/styles'
@@ -15,7 +15,7 @@ import { Link, NavLink } from 'react-router-dom'
 import TopBarSearchField from './TopBarSearchField'
 import TopBarInfoButton from './TopBarInfoButton'
 import TopBarLanguageButton from './TopBarLanguageButton'
-import Divider from '@mui/material/Divider'
+// import Divider from '@mui/material/Divider'
 import { has } from 'lodash'
 import secoLogo from '../../img/logos/seco-logo-48x50.png'
 
@@ -31,12 +31,12 @@ const TopBar = props => {
     color: '#fff',
     border: isActive ? '1px solid #fff' : `1px solid ${theme.palette.primary.main}`
   })
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
+  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
+  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const { perspectives, currentLocale, availableLocales, rootUrl, layoutConfig } = props
   const { topBar } = layoutConfig
-  const handleMobileMenuOpen = event => setMobileMoreAnchorEl(event.currentTarget)
-  const handleMobileMenuClose = () => setMobileMoreAnchorEl(null)
+  // const handleMobileMenuOpen = event => setMobileMoreAnchorEl(event.currentTarget)
+  // const handleMobileMenuClose = () => setMobileMoreAnchorEl(null)
   const federatedSearchMode = props.location.pathname.indexOf('federated-search') !== -1
   let showSearchField = true
   if (has(layoutConfig.topBar, 'showSearchField')) {
@@ -61,39 +61,39 @@ const TopBar = props => {
     return link
   }
 
-  const renderMobileMenuItem = perspective => {
-    if (has(perspective, 'externalUrl')) {
-      return (
-        <Box
-          component='a'
-          key={perspective.id}
-          href={perspective.externalUrl}
-          target='_blank'
-          rel='noopener noreferrer'
-          sx={{
-            textDecoration: 'none'
-          }}
-        >
-          <MenuItem>
-            {perspective.label
-              ? perspective.label.toUpperCase()
-              : intl.get(`perspectives.${perspective.id}.label`).toUpperCase()}
-          </MenuItem>
-        </Box>
-      )
-    } else {
-      return (
-        <MenuItem
-          key={perspective.id}
-          component={AdapterLink}
-          to={getInternalLink(perspective)}
-          onClick={handleMobileMenuClose}
-        >
-          {intl.get(`perspectives.${perspective.id}.label`).toUpperCase()}
-        </MenuItem>
-      )
-    }
-  }
+  // const renderMobileMenuItem = perspective => {
+  //   if (has(perspective, 'externalUrl')) {
+  //     return (
+  //       <Box
+  //         component='a'
+  //         key={perspective.id}
+  //         href={perspective.externalUrl}
+  //         target='_blank'
+  //         rel='noopener noreferrer'
+  //         sx={{
+  //           textDecoration: 'none'
+  //         }}
+  //       >
+  //         <MenuItem>
+  //           {perspective.label
+  //             ? perspective.label.toUpperCase()
+  //             : intl.get(`perspectives.${perspective.id}.label`).toUpperCase()}
+  //         </MenuItem>
+  //       </Box>
+  //     )
+  //   } else {
+  //     return (
+  //       <MenuItem
+  //         key={perspective.id}
+  //         component={AdapterLink}
+  //         to={getInternalLink(perspective)}
+  //         onClick={handleMobileMenuClose}
+  //       >
+  //         {intl.get(`perspectives.${perspective.id}.label`).toUpperCase()}
+  //       </MenuItem>
+  //     )
+  //   }
+  // }
 
   const renderDesktopTopMenuItem = perspective => {
     if (has(perspective, 'externalUrl')) {
@@ -132,75 +132,75 @@ const TopBar = props => {
     }
   }
 
-  const renderInfoItem = item => {
-    let jsx
-    if (item.externalLink) {
-      jsx = (
-        <Box
-          key={item.id}
-          href={intl.get(`topBar.info.${item.translatedUrl}`)}
-          target='_blank'
-          rel='noopener noreferrer'
-          sx={{
-            textDecoration: 'none'
-          }}
-        >
-          <MenuItem onClick={handleMobileMenuClose}>
-            {intl.get(`topBar.info.${item.translatedText}`).toUpperCase()}
-          </MenuItem>
-        </Box>
-      )
-    } else {
-      jsx = (
-        <MenuItem
-          key={item.id}
-          component={AdapterLink}
-          to={`${props.rootUrl}${item.internalLink}`}
-          onClick={handleMobileMenuClose}
-        >
-          {intl.get(`topBar.info.${item.translatedText}`).toUpperCase()}
-        </MenuItem>
-      )
-    }
-    return jsx
-  }
+  // const renderInfoItem = item => {
+  //   let jsx
+  //   if (item.externalLink) {
+  //     jsx = (
+  //       <Box
+  //         key={item.id}
+  //         href={intl.get(`topBar.info.${item.translatedUrl}`)}
+  //         target='_blank'
+  //         rel='noopener noreferrer'
+  //         sx={{
+  //           textDecoration: 'none'
+  //         }}
+  //       >
+  //         <MenuItem onClick={handleMobileMenuClose}>
+  //           {intl.get(`topBar.info.${item.translatedText}`).toUpperCase()}
+  //         </MenuItem>
+  //       </Box>
+  //     )
+  //   } else {
+  //     jsx = (
+  //       <MenuItem
+  //         key={item.id}
+  //         component={AdapterLink}
+  //         to={`${props.rootUrl}${item.internalLink}`}
+  //         onClick={handleMobileMenuClose}
+  //       >
+  //         {intl.get(`topBar.info.${item.translatedText}`).toUpperCase()}
+  //       </MenuItem>
+  //     )
+  //   }
+  //   return jsx
+  // }
 
-  const renderMobileMenu = perspectives => {
-    const { topBar } = props.layoutConfig
-    const { infoDropdown } = topBar
-    return (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={handleMobileMenuClose}
-      >
-        {perspectives.map(perspective => perspective.hideTopPerspectiveButton ? null : renderMobileMenuItem(perspective))}
-        <Divider />
-        {topBar.feedbackLink && renderMobileMenuItem({
-          id: 'feedback',
-          externalUrl: topBar.feedbackLink,
-          label: intl.get('topBar.feedback')
-        })}
-        {infoDropdown && infoDropdown.map(item => renderInfoItem(item))}
-        {topBar.externalInstructions && renderMobileMenuItem({
-          id: 'instructions',
-          externalUrl: intl.get('topBar.instructionsUrl'),
-          label: intl.get('topBar.instructions')
-        })}
-        {!topBar.externalInstructions &&
-          <MenuItem
-            key='instructions'
-            component={AdapterLink}
-            to={`${props.rootUrl}/instructions`}
-            onClick={handleMobileMenuClose}
-          >
-            {intl.get('topBar.instructions').toUpperCase()}
-          </MenuItem>}
-      </Menu>
-    )
-  }
+  // const renderMobileMenu = perspectives => {
+  //   const { topBar } = props.layoutConfig
+  //   const { infoDropdown } = topBar
+  //   return (
+  //     <Menu
+  //       anchorEl={mobileMoreAnchorEl}
+  //       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+  //       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+  //       open={isMobileMenuOpen}
+  //       onClose={handleMobileMenuClose}
+  //     >
+  //       {perspectives.map(perspective => perspective.hideTopPerspectiveButton ? null : renderMobileMenuItem(perspective))}
+  //       <Divider />
+  //       {topBar.feedbackLink && renderMobileMenuItem({
+  //         id: 'feedback',
+  //         externalUrl: topBar.feedbackLink,
+  //         label: intl.get('topBar.feedback')
+  //       })}
+  //       {infoDropdown && infoDropdown.map(item => renderInfoItem(item))}
+  //       {topBar.externalInstructions && renderMobileMenuItem({
+  //         id: 'instructions',
+  //         externalUrl: intl.get('topBar.instructionsUrl'),
+  //         label: intl.get('topBar.instructions')
+  //       })}
+  //       {!topBar.externalInstructions &&
+  //         <MenuItem
+  //           key='instructions'
+  //           component={AdapterLink}
+  //           to={`${props.rootUrl}/instructions`}
+  //           onClick={handleMobileMenuClose}
+  //         >
+  //           {intl.get('topBar.instructions').toUpperCase()}
+  //         </MenuItem>}
+  //     </Menu>
+  //   )
+  // }
 
   return (
     <>
@@ -372,7 +372,7 @@ const TopBar = props => {
                 loadLocales={props.loadLocales}
                 location={props.location}
               />}
-            <IconButton
+            {/* <IconButton
               aria-label='display more actions'
               color='inherit'
               edge='end'
@@ -380,11 +380,11 @@ const TopBar = props => {
               size='large'
             >
               <MoreIcon />
-            </IconButton>
+            </IconButton> */}
           </Box>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu(perspectives)}
+      {/* {renderMobileMenu(perspectives)} */}
     </>
   )
 }
