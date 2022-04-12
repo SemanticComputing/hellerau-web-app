@@ -228,7 +228,7 @@ export default {
   deckGlMap: {
     arcColouring: 'Arc colouring:',
     showMoreInformation: 'Click to show more information.',
-    studentMigrations: {
+    migrations: {
       legendTitle: 'Arc colouring',
       legendFrom: 'From',
       legendTo: 'To',

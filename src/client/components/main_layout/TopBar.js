@@ -178,12 +178,12 @@ const TopBar = props => {
       >
         {perspectives.map(perspective => perspective.hideTopPerspectiveButton ? null : renderMobileMenuItem(perspective))}
         <Divider />
-        {renderMobileMenuItem({
+        {topBar.feedbackLink && renderMobileMenuItem({
           id: 'feedback',
-          externalUrl: props.layoutConfig.topBar.feedbackLink,
+          externalUrl: topBar.feedbackLink,
           label: intl.get('topBar.feedback')
         })}
-        {infoDropdown.map(item => renderInfoItem(item))}
+        {infoDropdown && infoDropdown.map(item => renderInfoItem(item))}
         {topBar.externalInstructions && renderMobileMenuItem({
           id: 'instructions',
           externalUrl: intl.get('topBar.instructionsUrl'),
@@ -303,18 +303,18 @@ const TopBar = props => {
                 borderLeft: '2px solid white'
               })}
             />
-            {renderDesktopTopMenuItem({
+            {topBar.feedbackLink && renderDesktopTopMenuItem({
               id: 'feedback',
               externalUrl: props.layoutConfig.topBar.feedbackLink,
               label: intl.get('topBar.feedback')
             })}
-            <TopBarInfoButton rootUrl={props.rootUrl} layoutConfig={layoutConfig} />
+            {topBar.infoDropdown && <TopBarInfoButton rootUrl={props.rootUrl} layoutConfig={layoutConfig} />}
             {topBar.externalInstructions && renderDesktopTopMenuItem({
               id: 'instructions',
               externalUrl: intl.get('topBar.instructionsUrl'),
               label: intl.get('topBar.instructions')
             })}
-            {!topBar.externalInstructions &&
+            {!topBar.externalInstructions && !topBar.hideInstructionsLink &&
               <Button
                 component={AdapterNavLink}
                 to={`${props.rootUrl}/instructions`}

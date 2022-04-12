@@ -1,33 +1,69 @@
 {
-    "id": "perspective1",
+    "id": "hellerau",
     "endpoint": {
-        "url": "https://ldf.fi/mmm/sparql",
+        "url": "https://ldf.fi/hellerau/sparql",
         "useAuth": false,
         "prefixesFile": "SparqlQueriesPrefixes.js"
     },
-    "sparqlQueriesFile": "SparqlQueriesHellerau.js",
+    "sparqlQueriesFile": "SparqlQueriesHellerau",
     "baseURI": "https://ldf.fi/hellerau/sparql",
     "URITemplate": "",
     "facetClass": "foaf:person",
     "frontPageImage": "main_page/hellerau-452x262.png",
     "searchMode": "faceted-search",
+    "hideTopPerspectiveButton": true,
     "defaultActiveFacets": [
         "prefLabel"
     ],
-    "defaultTab": "table",
     "defaultInstancePageTab": "table",
     "resultClasses": {
         "hellerau": {
             "paginatedResultsConfig": {
-                "tabID": 0,
+                "tabID": 1,
                 "component": "ResultTable",
                 "tabPath": "table",
                 "tabIcon": "CalendarViewDay",
                 "propertiesQueryBlock": "personPropertiesFacetResults",
-                "pagesize": 10,
+                "pagesize": 25,
                 "sortBy": "prefLabel",
                 "sortDirection": "asc"
             }
+        },
+        "migrations": {
+            "tabID": 0,
+            "component": "Deck",
+            "tabPath": "migrations",
+            "tabIcon": "Redo",
+            "sparqlQuery": "hellerauMigrationsQuery",
+            "facetClass": "hellerau",
+            "filterTarget": "person",
+            "resultMapper": "makeObjectList",
+            "layerType": "arcLayer",
+            "arcWidthVariable": "instanceCountScaled",
+            "instanceVariable": "id",
+            "showTooltips": true,
+            "postprocess": {
+                "func": "linearScale",
+                "config": {
+                    "variable": "instanceCount",
+                    "minAllowed": 3,
+                    "maxAllowed": 30
+                }
+            }
+        },
+        "migrationsDialog": {
+            "sparqlQuery": "hellerauMigrationsDialogQuery",
+            "filterTarget": "id",
+            "resultMapper": "makeObjectList"
+        }
+    },
+    "maps": {
+        "migrations": {
+            "center": [
+                22.43,
+                10.37
+            ],
+            "zoom": 2
         }
     },
     "properties": [
@@ -70,11 +106,33 @@
     ],
     "facets": {
         "prefLabel": {
-            "containerClass": "one",
+            "containerClass": "three",
             "facetType": "text",
             "filterType": "textFilter",
             "sortByPredicate": "skos:prefLabel",
             "textQueryProperty": "skos:prefLabel"
+        },
+        "home1930": {
+            "containerClass": "ten",
+            "facetType": "list",
+            "filterType": "uriFilter",
+            "predicate": "h-schema:home_1930",
+            "sortByPredicate": "h-schema:home_1930/gn:name",
+            "facetLabelPredicate": "gn:name",
+            "searchField": true,
+            "sortBy": "instanceCount",
+            "sortDirection": "desc"
+        },
+        "home1937": {
+            "containerClass": "ten",
+            "facetType": "list",
+            "filterType": "uriFilter",
+            "predicate": "h-schema:home_1937",
+            "sortByPredicate": "h-schema:home_1937/gn:name",
+            "facetLabelPredicate": "gn:name",
+            "searchField": true,
+            "sortBy": "instanceCount",
+            "sortDirection": "desc"
         }
     }
 }

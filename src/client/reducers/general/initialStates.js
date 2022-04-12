@@ -8,7 +8,7 @@ export const resultsInitialState = {
   fetching: false,
   fetchingResultCount: false,
   fetchingInstanceAnalysisData: false,
-  facetedSearchHeaderExpanded: false,
+  facetedSearchHeaderExpanded: true,
   instancePageHeaderExpanded: false,
   instanceTableData: null,
   instanceTableExternalData: null,

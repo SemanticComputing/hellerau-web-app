@@ -20,7 +20,7 @@ const FacetResults = props => {
       />
       <Route
         exact path={`${rootUrl}/${perspective.id}/faceted-search`}
-        render={() => <Redirect to={`${rootUrl}/${perspective.id}/faceted-search/table`} />}
+        render={() => <Redirect to={`${rootUrl}/${perspective.id}/faceted-search/migrations`} />}
       />
       {Object.keys(perspective.resultClasses).map(resultClass => {
         let resultClassConfig = perspective.resultClasses[resultClass]

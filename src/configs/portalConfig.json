@@ -4,7 +4,8 @@
     "perspectives": {
         "searchPerspectives": [
             "hellerau"
-        ]
+        ],
+        "onlyInstancePages" : []
     },
     "localeConfig": {
         "defaultLocale": "en",
@@ -39,25 +40,13 @@
         "topBar": {
             "logoTextTransform": "none",
             "showLanguageButton": false,
-            "feedbackLink": "https://link.webropolsurveys.com/...",
+            "showSearchField": false,
             "externalInstructions": false,
             "externalAboutPage": false,
+            "hideInstructionsLink": true,
             "reducedHeight": 48,
             "defaultHeight": 64,
-            "mobileMenuBreakpoint": 1360,
-            "infoDropdown": [
-                {
-                    "id": "about",
-                    "translatedText": "aboutThePortal",
-                    "internalLink": "/about"
-                },
-                {
-                    "id": "blog",
-                    "externalLink": true,
-                    "translatedUrl": "blogUrl",
-                    "translatedText": "blog"
-                }
-            ]
+            "mobileMenuBreakpoint": 1360
         },
         "mainPage": {
             "bannerImage": "main_page/mmm-banner.jpg",
