@@ -1,23 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Collapse from '@material-ui/core/Collapse'
+import withStyles from '@mui/styles/withStyles'
+import Collapse from '@mui/material/Collapse'
+import IconButton from '@mui/material/IconButton'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import HTMLParser from '../../helpers/HTMLParser'
+import classNames from 'classnames'
+import clsx from 'clsx'
 
 const styles = theme => ({
-  valueList: {
-    paddingLeft: 20,
-    maxHeight: 200,
+  resultTableList: props => ({
+    maxHeight: props.tableData && props.tableData.paginatedResultsRowContentMaxHeight
+      ? props.tableData.paginatedResultsRowContentMaxHeight
+      : 200,
     overflow: 'auto'
-  },
-  valueListNoBullets: {
-    listStyle: 'none',
-    paddingLeft: 0
-  },
-  numberedList: {
-    maxHeight: 200,
-    overflow: 'auto'
-  },
+  }),
+  valueList: props => ({
+    paddingLeft: 20
+  }),
   tooltip: {
     maxWidth: 500
   },
@@ -30,29 +30,42 @@ const styles = theme => ({
   },
   threeDots: {
     cursor: 'pointer'
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest
+    })
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)'
   }
 })
 
 const StringList = props => {
-  const createFirstValue = (data, isArray) => {
-    let firstValue = isArray ? data[0] : data
+  const parser = new HTMLParser(props)
+
+  const createFirstValue = data => {
+    let firstValue = Array.isArray(data) ? data[0] : data
     let addThreeDots = false
     if (props.collapsedMaxWords) {
       const wordCount = firstValue.split(' ').length
       if (wordCount > props.collapsedMaxWords) {
         firstValue = firstValue.trim().split(' ').splice(0, props.collapsedMaxWords).join(' ')
         addThreeDots = true
-        // firstValue = `${firstValue}...`
       }
     } else if (isArray) {
       addThreeDots = true
-      // firstValue = `${firstValue}...`
+    }
+    if (props.renderAsHTML) {
+      firstValue = parser.parseHTML(firstValue)
     }
     return (
       <>
-        <div className={props.classes.stringContainer}>{firstValue}</div>
+        <span>{firstValue}</span>
         {addThreeDots &&
-          <span className={props.classes.threeDots} onClick={() => props.onExpandClick(props.rowId)}> ...</span>}
+          <span className={props.classes.threeDots} onClick={() => props.onExpandClick(props.rowId)}>...</span>}
       </>
     )
   }
@@ -61,36 +74,51 @@ const StringList = props => {
     data = data.sort()
     if (props.numberedList) {
       return (
-        <ol className={props.classes.numberedList}>
+        <ol className={classes.resultTableList}>
           {data.map((item, i) => <li key={i}>{item}</li>)}
         </ol>
       )
     } else {
       return (
-        <ul className={props.classes.valueList}>
+        <ul className={classNames(classes.resultTableList, classes.valueList)}>
           {data.map((item, i) => <li key={i}>{item}</li>)}
         </ul>
       )
     }
   }
 
-  const { renderAsHTML } = props
+  const { renderAsHTML, classes, expanded, rowId, onExpandClick, showExtraCollapseButton = false } = props
   let { data } = props
   if (data == null || data === '-') {
     return '-'
   }
   const isArray = Array.isArray(data)
+  let firstValue
+  if (!expanded) {
+    firstValue = createFirstValue(data)
+  }
   if (renderAsHTML) {
-    const parser = new HTMLParser(props)
     data = parser.parseHTML(data)
   }
   return (
     <>
-      {!props.expanded && createFirstValue(data, isArray)}
+      {!expanded && firstValue}
       <Collapse in={props.expanded} timeout='auto' unmountOnExit>
         {isArray && createBasicList(data)}
-        {!isArray && <div className={props.classes.stringContainer}>{data}</div>}
+        {!isArray && <>{data}</>}
       </Collapse>
+      {expanded && showExtraCollapseButton &&
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: expanded
+          })}
+          onClick={() => onExpandClick(rowId)}
+          aria-expanded={expanded}
+          aria-label='Show more'
+          size='large'
+        >
+          <ExpandMoreIcon />
+        </IconButton>}
     </>
   )
 }

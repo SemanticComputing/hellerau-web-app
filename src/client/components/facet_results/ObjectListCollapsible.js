@@ -1,27 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import Collapse from '@material-ui/core/Collapse'
+import withStyles from '@mui/styles/withStyles'
+import Collapse from '@mui/material/Collapse'
 import { ISOStringToDate } from './Dates'
 import { orderBy, has } from 'lodash'
 import ObjectListItem from './ObjectListItem'
 import ObjectListItemSources from './ObjectListItemSources'
 import ObjectListItemEvent from './ObjectListItemEvent'
+import classNames from 'classnames'
 
 const styles = () => ({
-  valueList: {
-    paddingLeft: 20,
-    maxHeight: 200,
+  resultTableList: props => ({
+    maxHeight: props.tableData && props.tableData.paginatedResultsRowContentMaxHeight
+      ? props.tableData.paginatedResultsRowContentMaxHeight
+      : 200,
     overflow: 'auto'
-  },
-  valueListNoBullets: {
-    listStyle: 'none',
-    paddingLeft: 0
-  },
-  numberedList: {
-    maxHeight: 200,
-    overflow: 'auto'
-  },
+  }),
+  valueList: props => ({
+    paddingLeft: 20
+  }),
   dateContainer: {
     width: 180,
     display: 'inline-block'
@@ -33,7 +30,7 @@ const styles = () => ({
 
 const ObjectListCollapsible = props => {
   const {
-    sortValues, sortBy, makeLink, externalLink, linkAsButton, columnId, showSource,
+    sortValues, sortBy, sortByConvertDataTypeTo, makeLink, externalLink, linkAsButton, columnId, showSource,
     sourceExternalLink, numberedList, collapsedMaxWords, classes, shortenLabel
   } = props
   let { data } = props
@@ -49,6 +46,11 @@ const ObjectListCollapsible = props => {
     } else if (props.columnId === 'event') {
       data = orderBy(data, 'date')
     } else if (props.sortBy) {
+      if (sortByConvertDataTypeTo && sortByConvertDataTypeTo === 'integer') {
+        data.forEach(item => {
+          item[sortBy] = parseInt(item[sortBy])
+        })
+      }
       data = orderBy(data, sortBy)
     } else {
       data = orderBy(data, 'prefLabel')
@@ -103,12 +105,12 @@ const ObjectListCollapsible = props => {
     </>
 
   const renderBulletedList = data =>
-    <ul className={props.classes.valueList}>
+    <ul className={classNames(classes.resultTableList, classes.valueList)}>
       {renderListItems(data)}
     </ul>
 
   const renderNumberedList = data =>
-    <ol className={props.classes.numberedList}>
+    <ol className={classes.resultTableList}>
       {renderListItems(data)}
     </ol>
 

@@ -64,6 +64,16 @@ export const generateConstraintsBlock = ({
             inverse: inverse
           })
           break
+        case 'dateNoTimespanFilter':
+          filterStr += generateDateNoTimespanFilter({
+            backendSearchConfig,
+            facetClass: facetClass,
+            facetID: c.facetID,
+            filterTarget: filterTarget,
+            values: c.values,
+            inverse: inverse
+          })
+          break
         case 'integerFilter':
         case 'integerFilterRange':
           filterStr += generateIntegerFilter({
@@ -94,16 +104,33 @@ const generateTextFilter = ({
   inverse
 }) => {
   const facetConfig = backendSearchConfig[facetClass].facets[facetID]
-  let filterStr = ''
-  if (facetConfig.textQueryPredicate === '') {
-    filterStr = `?${filterTarget} text:query (${facetConfig.textQueryProperty} '${queryString}') .`
-  } else {
-    filterStr = `
-      ?textQueryTarget text:query (${facetConfig.textQueryProperty} '${queryString}') .
-      ?${filterTarget} ${facetConfig.textQueryPredicate} ?textQueryTarget .
-
-    `
+  const queryTargetVariable = facetConfig.textQueryPredicate
+    ? '?textQueryTarget'
+    : `?${filterTarget}`
+  const querySubject = facetConfig.textQueryGetLiteral
+    ? `( ${queryTargetVariable} ?score ?literal )`
+    : queryTargetVariable
+  let queryObject = ''
+  if (has(facetConfig, 'textQueryProperty') && facetConfig.textQueryGetLiteral &&
+      has(facetConfig, 'textQueryHiglightingOptions')) {
+    queryObject = `( ${facetConfig.textQueryProperty} '${queryString}' "${facetConfig.textQueryHiglightingOptions}" )`
   }
+  if (!has(facetConfig, 'textQueryProperty') && facetConfig.textQueryGetLiteral &&
+       has(facetConfig, 'textQueryHiglightingOptions')) {
+    queryObject = `( '${queryString}' "${facetConfig.textQueryHiglightingOptions}" )`
+  }
+  if (has(facetConfig, 'textQueryProperty') && !facetConfig.textQueryGetLiteral &&
+       !has(facetConfig, 'textQueryHiglightingOptions')) {
+    queryObject = `( ${facetConfig.textQueryProperty} '${queryString}' )`
+  }
+  if (!has(facetConfig, 'textQueryProperty') && !facetConfig.textQueryGetLiteral &&
+       !has(facetConfig, 'textQueryHiglightingOptions')) {
+    queryObject = `'${queryString}'`
+  }
+  const filterStr = facetConfig.textQueryPredicate
+    ? `${queryTargetVariable} text:query ${queryObject} .
+    ?${filterTarget} ${facetConfig.textQueryPredicate} ${queryTargetVariable} .`
+    : `${querySubject} text:query ${queryObject} .`
   if (inverse) {
     return `
       FILTER NOT EXISTS {
@@ -225,6 +252,41 @@ const generateIntegerFilter = ({
   }
 }
 
+const generateDateNoTimespanFilter = ({
+  backendSearchConfig,
+  facetClass,
+  facetID,
+  filterTarget,
+  values,
+  inverse
+}) => {
+  const facetConfig = backendSearchConfig[facetClass].facets[facetID]
+  const { start, end } = values
+  let datefilter = ''
+  if (start === '') {
+    datefilter = `?value <= "${end}"^^xsd:date`
+  } else if (end === '') {
+    datefilter = `?value >= "${start}"^^xsd:date`
+  } else {
+    datefilter = `?value >= "${start}"^^xsd:date && ?value <= "${end}"^^xsd:date`
+  }
+  const filterStr = `
+    ?${filterTarget} ${facetConfig.predicate} ?value .
+    FILTER(
+      ${datefilter}
+    )
+  `
+  if (inverse) {
+    return `
+    FILTER NOT EXISTS {
+        ${filterStr}
+    }
+    `
+  } else {
+    return filterStr
+  }
+}
+
 const generateUriFilter = ({
   backendSearchConfig,
   facetClass,
@@ -237,7 +299,7 @@ const generateUriFilter = ({
   useConjuction
 }) => {
   const facetConfig = backendSearchConfig[facetClass].facets[facetID]
-  const includeChildren = facetConfig.type === 'hierarchical' && selectAlsoSubconcepts
+  const includeChildren = facetConfig.facetType === 'hierarchical' && selectAlsoSubconcepts
   const { literal, predicate, parentProperty } = facetConfig
   const { modifiedValues, indexOfUnknown } = handleUnknownValue(values)
   let s
